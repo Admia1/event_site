@@ -1,28 +1,34 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-class person(models.Model):
+class Person(models.Model):
+    user = models.ForeignKey(User ,on_delete=models.CASCADE)
+
     first_name = models.CharField(max_length = 100)
     last_name = models.CharField(max_length = 100)
-    national_id = models.IntegerField()
-    phone_number = models.IntegerField()
+    national_id = models.CharField(max_length = 100)
+    phone_number = models.CharField(max_length = 100)
     email = models.EmailField(max_length = 100)
 
-    person_type = models.IntegerField()
+    person_type = models.IntegerField(default = 0)
 
-    detail_type = models.IntegerField()
+    detail_type = models.IntegerField(default = 4)
 
-    guide_id = models.CharField(max_length = 100)
-    university = models.CharField(max_length = 100)
-    study_field = models.CharField(max_length = 100)
-    student_number = models.IntegerField()
-    agancy = models.CharField(max_length = 100)
-    city = models.CharField(max_length = 100)
+    guide_id = models.CharField(default="-", max_length = 100)
 
+    university = models.CharField(default="-", max_length = 100)
+    study_field = models.CharField(default="-", max_length = 100)
+    student_id = models.CharField(default="-", max_length = 100)
 
+    agancy = models.CharField(default="-", max_length = 100)
+    city = models.CharField(default="-", max_length = 100)
+
+    hotel = models.CharField(default="-", max_length = 100)
+    #city = models.CharField(default="-", max_length = 100)
 
     def is_staff(self):
-        return self.person_id == 2799
+        return self.person_id == 1
 
     def person_type_show(self):
         type_dictionary = {
