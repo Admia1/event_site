@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -7,7 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>HomePage</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="registeration/show_off.css"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'registeration/show_off.css' %}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -33,7 +34,7 @@
             <a id="login_fm" href="#">
                 ورود
             </a>
-            <img id="logo_fm" src="photo1.jpg">
+            <img id="logo_fm" ="{% static 'registeration/photo1.jpg' %}">
         </div>
 
         <div id="content">
@@ -70,7 +71,7 @@
 
                     <div class="image">
 
-                        <img id="location_img" src="Amazing Cityscapes HD Wallpapers (Downloadha (36).jpg">
+                        <img id="location_img" src="{% static 'registeration/p1.jpg' %}">
 
                     </div>
 
@@ -142,7 +143,7 @@
 
                 <br>
 
-                <img class="ui centered medium image" id="speecher_img" src="Amazing Cityscapes HD Wallpapers (Downloadha (36).jpg">
+                <img class="ui centered medium image" id="speecher_img" src="{% static 'registeration/p1.jpg' %}">
                 <br>
 
                 پروفسور <span id="span_speecher1">Dr. Wolfgang Georg Arlt FRGS FRAS</span> &nbsp موسس مجموعه تحقیقاتی <span id="span_speecher2">COTRI</span>  و همچنین استاد گردشگری بسیاری از دانشگاه های مطرح دنیاست. تجربیات کاری و اکادمیک وی از صنعت گردشگری چین به بیش از چهار دهه می رسد.
