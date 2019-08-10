@@ -151,7 +151,7 @@ def login_view(request):
                 user = User.objects.get(username=request.POST['username'])
                 if user.check_password(form.request.POST['password']):
                     login(request, user)
-                    return HttpResponseRedirect(reverse('polls:home'))
+                    return HttpResponseRedirect(reverse('registeration:home'))
 
         return render(request, template, {'error_message': 'Wrong username or password'})
 
@@ -159,6 +159,8 @@ def login_view(request):
 
 
 def home_view(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('registeration:login'))
     template = 'registeration/home.html'
     return render(request,template)
 
