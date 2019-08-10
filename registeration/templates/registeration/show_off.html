@@ -25,13 +25,13 @@
         </div>
 
         <div id="fixed_menu">
-            <a id="home_fm" href="#">
+            <a id="home_fm" href="{% url 'registeration:home' %}">
                 خانه
             </a>
-            <a id="sign_fm" href="#">
+            <a id="sign_fm" href="{% url 'registeration:register' %}">
                 ثبت نام
             </a>
-            <a id="login_fm" href="#">
+            <a id="login_fm" href="{% url 'registeration:login' %}">
                 ورود
             </a>
             <img id="logo_fm" src="{% static 'registeration/photo1.jpg' %}">
