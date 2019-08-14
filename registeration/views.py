@@ -185,6 +185,7 @@ def verify_view(request):
         except:
             return HttpResponseRedirect(reverse('registeration:error'))
 
+        client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
         result = client.service.PaymentVerification(MERCHANT, invoice.authority, invoice.amount)
         if result.Status == 100 or result.Status == 101:
             #payed
@@ -230,7 +231,7 @@ def purchase_view(request, event_pk):
     description = "جهت خرید بلیط"                 # Required
     email  = person.email                         # Optional
     mobile = person.phone_number                  # Optional
-    CallbackURL = 'http://academic-event/verify/' # Important: need to edit for realy server.
+    CallbackURL = 'http://academic-events.ir/verify/' # Important: need to edit for realy server.
 
     result = client.service.PaymentRequest(MERCHANT, amount, description, email, mobile, CallbackURL)
     if result.Status == 100:
