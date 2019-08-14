@@ -1,6 +1,6 @@
 from django.contrib.auth import  login, logout
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from zeep import Client
 
@@ -236,7 +236,7 @@ def purchase_view(request, event_pk):
     if result.Status == 100:
         invoice.authority = result.Authority
         invoice.save()
-        return HttpResponseRedirect(reverse('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority)))
+        return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
     else:
         invoice.active = 0
         invoice.save()
