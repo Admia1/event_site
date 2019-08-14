@@ -2,11 +2,14 @@ from django.contrib.auth import  login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from zeep import Client
+
 
 from django.contrib.auth.models import User
 
-from .models import Person
+from .models import Person, Invoice, Event
 
+from . import secret
 
 def farsi_to_english_digit(number_string):
     dic = {
@@ -36,7 +39,7 @@ def register_post_validator(post):
             return "field %s is too long"%field_name
         return ""
 
-    for checking_field in ["first_name", "last_name", "national_id", "phone_number","email",]:
+    for checking_field in ["first_name", "last_name", "national_id", "phone_number","email","national_id",]:
         res = string_type_validator(checking_field, 99)
         if res:
             return res
@@ -94,7 +97,7 @@ def register_view(request):
         if request.method == 'POST':
             #validation of data
             error_message = register_post_validator(request.POST)
-            if error_message:
+            if not error_message:
                 # if user didnt registered before
                 eng_national_id = farsi_to_english_digit(request.POST['national_id'])
                 if ~(Person.objects.filter(national_id = eng_national_id).exists()):
@@ -149,11 +152,15 @@ def login_view(request):
         if 'username' in request.POST and 'password' in request.POST:
             if User.objects.filter(username=request.POST['username']).exists():
                 user = User.objects.get(username=request.POST['username'])
-                if user.check_password(form.request.POST['password']):
+                if user.check_password(request.POST['password']):
                     login(request, user)
                     return HttpResponseRedirect(reverse('registeration:home'))
-
-        return render(request, template, {'error_message': 'Wrong username or password'})
+                else:
+                    return render(request, template, {'error_message': 'wrong password'})
+            else:
+                return render(request, template, {'error_message': 'no such username'})
+        else:
+            return render(request, template, {'error_message': 'missing username or password in json'})
 
     return render(request, template)
 
@@ -162,8 +169,78 @@ def home_view(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('registeration:login'))
     template = 'registeration/home.html'
-    return render(request,template)
+    events = Event.objects.all()
+    return render(request,template,{'events' : events})
 
 def show_off_view(request):
     template = 'registeration/show_off.html'
     return render(request,template)
+
+def verify_view(request):
+    MERCHANT = secret.MERCHANT
+    if request.GET.get('Status') == 'OK':
+        authority = request.GET['Authority']
+        try:
+            invoice = Invoice.objects.get(authority=authority)
+        except:
+            return HttpResponseRedirect(reverse('registeration:error'))
+
+        result = client.service.PaymentVerification(MERCHANT, invoice.authority, invoice.amount)
+        if result.Status == 100 or result.Status == 101:
+            #payed
+            invoice = Invoice.objects.get(authority=request.GET['Authority'])
+            invoice.refid = result.RefID
+            invoice.paid = 1
+            invoice.save()
+        else:
+            #failed to pay
+            invoice.active = 0
+            invoice.save()
+
+    return HttpResponseRedirect(reverse('registeration:home'))
+
+
+def purchase_view(request, event_pk):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('registeration:show_off'))
+
+    template = 'registeration/home.html'
+    try :
+        person = Person.objects.get(user=request.user)
+    except:
+        return render(request, template, {'error_message': 'bad person'})
+    try:
+        event  = Event.objects.get(pk = event_pk)
+    except:
+        return render(request, template, {'error_message': 'bad event'})
+
+    if Invoice.objects.filter(event=event, person=person, paid=1).exists():
+        return render(request, template, {'error_message':'You\'ve already bought it'})
+
+    if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
+        return render(request, template, {'error_message':'out of tickets'})
+
+    amount  = event.price
+    invoice = Invoice.objects.create(person=person, event=event, amount=amount)
+
+    #change amount for off here
+
+    MERCHANT = secret.MERCHANT
+    client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
+    description = "جهت خرید بلیط"                 # Required
+    email  = person.email                         # Optional
+    mobile = person.phone_number                  # Optional
+    CallbackURL = 'http://academic-event/verify/' # Important: need to edit for realy server.
+
+    result = client.service.PaymentRequest(MERCHANT, amount, description, email, mobile, CallbackURL)
+    if result.Status == 100:
+        invoice.authority = result.Authority
+        invoice.save()
+        return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
+    else:
+        invoice.active = 0
+        invoice.save()
+        return render(request, template, {'error_message':'zarinpal error happend'})
+
+def error(request):
+    return HttpResponse("error")

@@ -43,3 +43,28 @@ class Person(models.Model):
             return type_dictionary[self.detail_type]
         else:
             return "خطا"
+
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+    price = models.IntegerField(default=5000)#tooman.
+    capacity = models.IntegerField(default=30)#People
+    detail = models.TextField(max_length=1000)
+
+    file_name = models.CharField(max_length=50)
+
+class Invoice(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    person = models.ForeignKey(Person, on_delete=models.PROTECT)
+    event  = models.ForeignKey(Event, on_delete=models.PROTECT)
+    amount = models.IntegerField(default=0)# tooman
+    active = models.IntegerField(default=1)# 0: deactive     , 1: active
+    paid   = models.IntegerField(default=0)# 0: never_paid , 1: $$$
+
+    authority   = models.CharField(max_length = 200, default = "none")
+    refid       = models.CharField(max_length = 200, default = "none")
+
+
+    def is_successful(self):
+        return self.status == 0

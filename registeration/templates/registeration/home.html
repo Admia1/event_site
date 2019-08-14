@@ -1,1 +1,9 @@
+{% if error_message%}
+<p>{{ error_message }}</p>
+{% endif %}
 <p>no place like home</p>
+<ul>
+  {% for event in events%}
+  <li><a href="{% url 'registeration:purchase' event.pk %}">{{ event.name }}</a></li>
+  {% endfor %}
+</ul>
