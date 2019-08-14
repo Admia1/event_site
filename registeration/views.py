@@ -236,7 +236,7 @@ def purchase_view(request, event_pk):
     if result.Status == 100:
         invoice.authority = result.Authority
         invoice.save()
-        return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
+        return HttpResponseRedirect(reverse('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority)))
     else:
         invoice.active = 0
         invoice.save()
