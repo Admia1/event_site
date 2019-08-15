@@ -190,8 +190,14 @@ def verify_view(request):
             #payed
             invoice = Invoice.objects.get(authority=request.GET['Authority'])
             invoice.refid = result.RefID
+            invoice.active = 1
             invoice.paid = 1
             invoice.save()
+
+            for o_invoice in Invoice.objects.filter(person=invoice.person, event=invoice.event, active=1):
+                if o_invoice.pk != invoice.pk:
+                    o_invoice.active=0
+                    o_invoice.save()
         else:
             #failed to pay
             invoice.active = 0
@@ -218,11 +224,16 @@ def purchase_view(request, event_pk):
         return render(request, template, {'error_message':'You\'ve already bought it'})
 
     if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
-        return render(request, template, {'error_message':'out of tickets'})
+        invoice_cleaner()# :/
+        if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
+            return render(request, template, {'error_message':'out of tickets'})
 
     amount  = event.price
     invoice = Invoice.objects.create(person=person, event=event, amount=amount)
 
+    if Invoice.objects.filter(event=event, active=1).count() > event.capacity:
+        return render(request, template, {'error_message':'out of tickets'})
+    #cant turn off other invoices of this person :(
     #change amount for off here
 
     MERCHANT = secret.MERCHANT
@@ -249,3 +260,10 @@ def logout_view(request):
 
 def error(request):
     return HttpResponse("error")
+
+
+def invoice_cleaner():
+    for invoice in Invoice.objects.filter(active=1, paid=0):
+        if  datetime.auto_now() - invoice.created_date > datetime.timedelta(hours=1):
+            invoice.active=0
+            invoice.save()
