@@ -65,6 +65,16 @@ class Invoice(models.Model):
     authority   = models.CharField(max_length = 200, default = "none")
     refid       = models.CharField(max_length = 200, default = "none")
 
+    discount_pk = models.IntegerField(default=0)
 
     def is_successful(self):
         return self.status == 0
+
+
+class Discount(models.Model):
+    percent = models.IntegerField(default=0)
+    event   = models.ForeignKey(Event, on_delete=models.CASCADE)
+    code    = models.CharField(max_length=100)
+    capacity = models.IntegerField(default=0)
+
+    detail = models.CharField(max_length=100)
