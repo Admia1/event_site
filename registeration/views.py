@@ -39,7 +39,7 @@ def register_post_validator(post):
             return "field %s is too long"%field_name
         return ""
 
-    for checking_field in ["first_name", "last_name", "national_id", "phone_number","email","national_id",]:
+    for checking_field in ["first_name", "last_name", "national_id", "phone_number","email",]:
         res = string_type_validator(checking_field, 99)
         if res:
             return res
