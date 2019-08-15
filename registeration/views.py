@@ -242,5 +242,10 @@ def purchase_view(request, event_pk):
         invoice.save()
         return render(request, template, {'error_message':'zarinpal error happend'})
 
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return HttpResponseRedirect(reverse('registeration:show_off'))
+
 def error(request):
     return HttpResponse("error")
