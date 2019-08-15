@@ -140,6 +140,7 @@ def register_view(request):
             else:
                 return render(request,template,{'error_message': error_message})
         else:
+            #load page for first time
             return render(request,template)
 
 def login_view(request):

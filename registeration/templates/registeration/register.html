@@ -4,6 +4,9 @@
 </head>
 <body>
 <p>Register page</p>
+{% if error_message%}
+<p style="color:red">{{ error_message }}</p>
+{% endif %}
 <form action="{% url 'registeration:register' %}" method="post">
 {% csrf_token %}
 <p>first name</p><input type="text" name="first_name" value="">

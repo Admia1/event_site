@@ -4,7 +4,7 @@
 <body>
 <p>Login page</p>
 {% if error_message%}
-<p>{{ error_message }}</p>
+<p style="color:red">{{ error_message }}</p>
 {% endif %}
 <form action="{% url 'registeration:login' %}" method="post">
 {% csrf_token %}
