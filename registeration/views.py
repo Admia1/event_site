@@ -103,8 +103,8 @@ def register_view(request):
                     # then create the user
                     user = User(
                         username = request.POST['email'],
-                        password = request.POST['national_id'],
                     )
+                    user.set_password(request.POST['national_id'])
                     user.save()
                     person = Person(user = user)
                     person.first_name = request.POST['first_name']
