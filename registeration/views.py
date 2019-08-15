@@ -99,18 +99,17 @@ def register_view(request):
             error_message = register_post_validator(request.POST)
             if not error_message:
                 # if user didnt registered before
-                eng_national_id = farsi_to_english_digit(request.POST['national_id'])
-                if ~(Person.objects.filter(national_id = eng_national_id).exists()):
+                if ~(Person.objects.filter(national_id = request.POST['national_id']).exists()):
                     # then create the user
                     user = User(
                         username = request.POST['email'],
-                        password = farsi_to_english_digit(request.POST['national_id']),
+                        password = request.POST['national_id'],
                     )
                     user.save()
                     person = Person(user = user)
                     person.first_name = request.POST['first_name']
                     person.last_name = request.POST['last_name']
-                    person.national_id = farsi_to_english_digit(request.POST['national_id'])
+                    person.national_id = request.POST['national_id']
                     person.phone_number = request.POST['phone_number']
                     person.email = request.POST['email']
                     person.detail_type = int(request.POST['detail_type'])
