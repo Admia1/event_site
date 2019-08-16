@@ -78,3 +78,8 @@ class Discount(models.Model):
     capacity = models.IntegerField(default=0)
 
     detail = models.CharField(max_length=100)
+
+
+class EventGroup(models.Model):
+    name = models.CharField(max_length=100)
+    detail = models.TextField(max_length=1000)
