@@ -52,6 +52,8 @@ class Event(models.Model):
 
     file_name = models.CharField(max_length=50)
 
+    event_group = models.ForeignKey(EventGroup, on_delete=models.PROTECT)
+
 class Invoice(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -73,7 +75,8 @@ class Invoice(models.Model):
 
 class Discount(models.Model):
     percent = models.IntegerField(default=0)
-    event   = models.ForeignKey(Event, on_delete=models.CASCADE)
+    #event   = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event_group = models.ForeignKey(EventGroup, on_delete=models.PROTECT)
     code    = models.CharField(max_length=100)
     capacity = models.IntegerField(default=0)
 
