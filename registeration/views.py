@@ -240,18 +240,18 @@ def purchase_view(request, event_pk):
     #cant turn off other invoices of this person :(
     #change amount for off here
 
-    if request.method == 'POST'
+    if request.method == 'POST':
         if 'discount_code' in request.POST:
             if request.POST['discount_code']:
                 try:
                     discount = Discount.objects.get(code=request.POST['discount_code'])
                 except:
-                    invoce.avtive=0
-                    invoce.save()
+                    invoice.avtive=0
+                    invoice.save()
                     return render(request, template, {'error_message' : 'invalid discount code'})
                 if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1) >= discount.capacity:
-                    invoce.active=0
-                    invoce.save()
+                    invoice.active=0
+                    invoice.save()
                     return render(request, template, {'error_message' : 'discount reached to limit'})
 
                 invoice.discount_pk = discount.pk
@@ -272,7 +272,7 @@ def purchase_view(request, event_pk):
     mobile = person.phone_number                  # Optional
     CallbackURL = 'http://academic-events.ir/verify/' # Important: need to edit for realy server.
 
-    amount = invoce.amount
+    amount = invoice.amount
 
     result = client.service.PaymentRequest(MERCHANT, amount, description, email, mobile, CallbackURL)
     if result.Status == 100:
@@ -298,3 +298,11 @@ def invoice_cleaner():
         if  datetime.auto_now() - invoice.created_date > datetime.timedelta(hours=1):
             invoice.active=0
             invoice.save()
+
+def event_view(request, event_pk):
+    template = 'registeration/event.html'
+    try:
+        event = Event.objects.get(pk=event_pk)
+    except:
+        return error(request)
+    return render(request, template, {'event' : event})
