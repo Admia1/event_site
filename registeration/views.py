@@ -7,7 +7,7 @@ from zeep import Client
 
 from django.contrib.auth.models import User
 
-from .models import Person, Invoice, Event
+from .models import Person, Invoice, Event, Discount
 
 from . import secret
 
@@ -244,7 +244,7 @@ def purchase_view(request, event_pk):
         if 'discount_code' in request.POST:
             if request.POST['discount_code']:
                 try:
-                    discount = Discount.objects.get(code=request.POST['discount_code'])
+                    discount = Discount.objects.get(code=request.POST['discount_code'])#debug event c
                 except:
                     invoice.avtive=0
                     invoice.save()
