@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+
+
+class EventGroup(models.Model):
+    name = models.CharField(max_length=100)
+    detail = models.TextField(max_length=1000)
+
 class Person(models.Model):
     user = models.ForeignKey(User ,on_delete=models.CASCADE)
 
@@ -81,8 +88,3 @@ class Discount(models.Model):
     capacity = models.IntegerField(default=0)
 
     detail = models.CharField(max_length=100)
-
-
-class EventGroup(models.Model):
-    name = models.CharField(max_length=100)
-    detail = models.TextField(max_length=1000)
