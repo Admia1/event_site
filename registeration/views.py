@@ -244,12 +244,12 @@ def purchase_view(request, event_pk):
         if 'discount_code' in request.POST:
             if request.POST['discount_code']:
                 try:
-                    discount = Discount.objects.get(code=request.POST['discount_code'])#debug event c
+                    discount = Discount.objects.get(code=request.POST['discount_code'])#debug event 
                 except:
                     invoice.avtive=0
                     invoice.save()
                     return render(request, template, {'error_message' : 'invalid discount code : <%s>'%request.POST['discount_code']})
-                if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1) >= discount.capacity:
+                if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() >= discount.capacity:
                     invoice.active=0
                     invoice.save()
                     return render(request, template, {'error_message' : 'discount reached to limit'})
