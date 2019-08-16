@@ -55,7 +55,7 @@ def register_post_validator(post):
         if digit not in "0123456789۰۱۲۳۴۵۶۷۸۹+":
             return "non numerical phone_number"
 
-    if post['detail_type'] not in ['0','1','2','3','4']:
+    if post['detail_type'] not in ['0','1','2','3',]:
         return "bad format of detail_type"
 
     type = int(post['detail_type'])
