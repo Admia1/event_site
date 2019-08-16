@@ -248,7 +248,7 @@ def purchase_view(request, event_pk):
                 except:
                     invoice.avtive=0
                     invoice.save()
-                    return render(request, template, {'error_message' : 'invalid discount code'})
+                    return render(request, template, {'error_message' : 'invalid discount code : <%s>'%request.POST['discount_code']})
                 if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1) >= discount.capacity:
                     invoice.active=0
                     invoice.save()
