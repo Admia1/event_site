@@ -260,7 +260,7 @@ def purchase_view(request, event_pk):
                     invoice.amount = invoice.amount * (100 - discount.percent) / 100
                     invoice.save()
 
-                if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count > discount.capacity:
+                if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() > discount.capacity:
                     invoice.active=0
                     invoice.save()
                     return render(request, template, {'error_message' : 'discount reached to limit'})
