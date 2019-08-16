@@ -229,13 +229,41 @@ def purchase_view(request, event_pk):
         if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
             return render(request, template, {'error_message':'out of tickets'})
 
+
     amount  = event.price
     invoice = Invoice.objects.create(person=person, event=event, amount=amount)
 
     if Invoice.objects.filter(event=event, active=1).count() > event.capacity:
+        invoice.active=0
+        invoice.save()
         return render(request, template, {'error_message':'out of tickets'})
     #cant turn off other invoices of this person :(
     #change amount for off here
+
+    if request.method == 'POST'
+        if 'discount_code' in request.POST:
+            if request.POST['discount_code']:
+                try:
+                    discount = Discount.objects.get(code=request.POST['discount_code'])
+                except:
+                    invoce.avtive=0
+                    invoce.save()
+                    return render(request, template, {'error_message' : 'invalid discount code'})
+                if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1) >= discount.capacity:
+                    invoce.active=0
+                    invoce.save()
+                    return render(request, template, {'error_message' : 'discount reached to limit'})
+
+                invoice.discount_pk = discount.pk
+
+                if discount.percent >= 0 and discount.percent <= 100:
+                    invoice.amount = invoice.amount * (100 - discount.percent) / 100
+                    invoice.save()
+
+                if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1) > discount.capacity:
+                    invoice.active=0
+                    invoice.save()
+                    return render(request, template, {'error_message' : 'discount reached to limit'})
 
     MERCHANT = secret.MERCHANT
     client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
@@ -243,6 +271,8 @@ def purchase_view(request, event_pk):
     email  = person.email                         # Optional
     mobile = person.phone_number                  # Optional
     CallbackURL = 'http://academic-events.ir/verify/' # Important: need to edit for realy server.
+
+    amount = invoce.amount
 
     result = client.service.PaymentRequest(MERCHANT, amount, description, email, mobile, CallbackURL)
     if result.Status == 100:
