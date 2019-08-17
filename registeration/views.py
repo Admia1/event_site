@@ -315,6 +315,9 @@ def discount_check_api(request, event_pk):
     if not request.user.is_authenticated():
         return JsonResponse({"status" : "error", "error_message" : "access denied"})
 
+    if request.method != "POST":
+        return JsonResponse({"status" : "error", "error_message" : "it should be post"})
+
     if 'discount_code' not in request.POST:
         return JsonResponse({"status" : "error", "error_message" : "bad json format"})
 
@@ -328,7 +331,9 @@ def discount_check_api(request, event_pk):
     except:
         return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "no such discount for this event"})
 
-    if Invoice.objects.filter(discount_pk = discount.pk).count() >= discount.capacity :
+    invoice_cleaner()
+
+    if Invoice.objects.filter(discount_pk = discount.pk, active=1).count() >= discount.capacity :
         return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "this discount is capacity is full"})
 
     return JsonResponse({"status" : "ok", "result" : "ok", "percent" : discount.percent})
