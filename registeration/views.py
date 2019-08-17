@@ -1,5 +1,5 @@
 from django.contrib.auth import  login, logout
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from zeep import Client
@@ -209,7 +209,7 @@ def verify_view(request):
 
 def purchase_view(request, event_pk):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('registeration:show_off'))
+        return HttpResponseRedirect(reverse('registeration:login'))
 
     template = 'registeration/home.html'
     try :
@@ -244,7 +244,7 @@ def purchase_view(request, event_pk):
         if 'discount_code' in request.POST:
             if request.POST['discount_code']:
                 try:
-                    discount = Discount.objects.get(code=request.POST['discount_code'])#debug event
+                    discount = Discount.objects.get(event_group=event.event_group, code=request.POST['discount_code'])#debug event
                 except:
                     invoice.avtive=0
                     invoice.save()
@@ -300,9 +300,35 @@ def invoice_cleaner():
             invoice.save()
 
 def event_view(request, event_pk):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse("registeration:login"))
     template = 'registeration/event.html'
     try:
         event = Event.objects.get(pk=event_pk)
     except:
         return error(request)
     return render(request, template, {'event' : event})
+
+
+
+def discount_check_api(request, event_pk):
+    if not request.user.is_authenticated():
+        return JsonResponse({"status" : "error", "error_message" : "access denied"})
+
+    if 'discount_code' not in request.POST:
+        return JsonResponse({"status" : "error", "error_message" : "bad json format"})
+
+    try:
+        event = Event.objects.get(pk=event_pk)
+    except:
+        return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "no such event"})
+
+    try:
+        discount = Discount.objects.get(code=request.POST['discount_code'], event_group=event.event_group)
+    except:
+        return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "no such discount for this event"})
+
+    if Invoice.objects.filter(discount_pk = discount.pk).count() >= discount.capacity :
+        return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "this discount is capacity is full"})
+
+    return JsonResponse({"status" : "ok", "result" : "ok", "percent" : discount.percent})

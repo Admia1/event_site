@@ -14,5 +14,6 @@ urlpatterns = [
     path('event/<int:event_pk>/purchase/', views.purchase_view, name="purchase"),
     path('verify/', views.verify_view, name="verify"),
     path('error/', views.error, name="error"),
+    path('api/discount_check/<int:event_pk>/', views.discount_check_api, name="discount_check"),
     path('', views.show_off_view, name="show_off")
 ]
