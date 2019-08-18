@@ -297,7 +297,7 @@ def error(request):
 
 def invoice_cleaner():
     for invoice in Invoice.objects.filter(active=1, paid=0):
-        if  datetime.auto_now() - invoice.created_date > datetime.timedelta(hours=1):
+        if  datetime.datetime.now() - invoice.created_date > datetime.timedelta(hours=1):
             invoice.active=0
             invoice.save()
 
