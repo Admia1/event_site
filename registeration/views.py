@@ -300,7 +300,7 @@ def invoice_cleaner():
             invoice.save()
 
 def event_view(request, event_pk):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("registeration:login"))
     template = 'registeration/event.html'
     try:
@@ -312,8 +312,8 @@ def event_view(request, event_pk):
 
 
 def discount_check_api(request, event_pk):
-    if not request.user.is_authenticated():
-        return JsonResponse({"status" : "error", "error_message" : "access denied"})
+    # if not request.user.is_authenticated:
+    #     return JsonResponse({"status" : "error", "error_message" : "access denied"})
 
     if request.method != "POST":
         return JsonResponse({"status" : "error", "error_message" : "it should be post"})
