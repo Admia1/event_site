@@ -2,6 +2,7 @@ from django.contrib.auth import  login, logout
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from zeep import Client
 
 
@@ -310,7 +311,7 @@ def event_view(request, event_pk):
     return render(request, template, {'event' : event})
 
 
-
+@csrf_exempt
 def discount_check_api(request, event_pk):
     # if not request.user.is_authenticated:
     #     return JsonResponse({"status" : "error", "error_message" : "access denied"})
