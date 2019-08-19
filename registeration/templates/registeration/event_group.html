@@ -1,0 +1,16 @@
+
+{% for event in events %}
+<p>
+  {{event.name}}
+</p>
+
+<p>
+  {{ event.price }} تومان
+</p>
+<form action="{% url 'registeration:purchase' event.pk %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="discount_code" value="">
+  <input type="submit" name="" value="خرید‍‍‍">
+</form>
+
+{% endfor %}
