@@ -138,7 +138,7 @@ def register_view(request):
                     return HttpResponseRedirect(reverse('registeration:home'))
 
                 else:
-                    return render(request,template,{'error_message': "you,ve already registered"})
+                    return render(request,template,{'error_message': "شما قبلا این بلیط را خریده اید"})
             else:
                 return render(request,template,{'error_message': error_message})
         else:
@@ -158,9 +158,9 @@ def login_view(request):
                     login(request, user)
                     return HttpResponseRedirect(reverse('registeration:home'))
                 else:
-                    return render(request, template, {'error_message': 'wrong password'})
+                    return render(request, template, {'error_message': 'رمز عبور نادرست است'})
             else:
-                return render(request, template, {'error_message': 'no such username'})
+                return render(request, template, {'error_message': 'ایمیل شما در سایت ثبت نشده است'})
         else:
             return render(request, template, {'error_message': 'missing username or password in json'})
 
@@ -221,15 +221,15 @@ def purchase_view(request, event_pk):
     try:
         event  = Event.objects.get(pk = event_pk)
     except:
-        return render(request, template, {'error_message': 'bad event'})
+        return render(request, template, {'error_message': 'همچین رویدادی وجود ندارد'})
 
     if Invoice.objects.filter(event=event, person=person, paid=1).exists():
-        return render(request, template, {'error_message':'You\'ve already bought it'})
+        return render(request, template, {'error_message':'شما قبلا بلیط این رویداد را خریداری کرده اید'})
 
     if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
         invoice_cleaner()# :/
         if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
-            return render(request, template, {'error_message':'out of tickets'})
+            return render(request, template, {'error_message':'ظرفیت این رویداد به اتمام رسیده است'})
 
 
     amount  = event.price
@@ -238,7 +238,7 @@ def purchase_view(request, event_pk):
     if Invoice.objects.filter(event=event, active=1).count() > event.capacity:
         invoice.active=0
         invoice.save()
-        return render(request, template, {'error_message':'out of tickets'})
+        return render(request, template, {'error_message':'ظرفیت این رویداد به پایان رسیده است'})
     #cant turn off other invoices of this person :(
     #change amount for off here
 
@@ -250,11 +250,11 @@ def purchase_view(request, event_pk):
                 except:
                     invoice.avtive=0
                     invoice.save()
-                    return render(request, template, {'error_message' : 'invalid discount code : <%s>'%request.POST['discount_code']})
+                    return render(request, template, {'error_message' : 'این کد تخفیف نامعتبر است'%request.POST['discount_code']})
                 if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() >= discount.capacity:
                     invoice.active=0
                     invoice.save()
-                    return render(request, template, {'error_message' : 'discount reached to limit'})
+                    return render(request, template, {'error_message' : 'دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است'})
 
                 invoice.discount_pk = discount.pk
 
@@ -265,7 +265,7 @@ def purchase_view(request, event_pk):
                 if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() > discount.capacity:
                     invoice.active=0
                     invoice.save()
-                    return render(request, template, {'error_message' : 'discount reached to limit'})
+                    return render(request, template, {'error_message' : 'دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است'})
 
     MERCHANT = secret.MERCHANT
     client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
@@ -284,7 +284,7 @@ def purchase_view(request, event_pk):
     else:
         invoice.active = 0
         invoice.save()
-        return render(request, template, {'error_message':'zarinpal error happend'})
+        return render(request, template, {'error_message':'خطای درگاه'})
 
 def logout_view(request):
     if request.user.is_authenticated:
@@ -327,16 +327,16 @@ def discount_check_api(request, event_pk):
     try:
         event = Event.objects.get(pk=event_pk)
     except:
-        return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "no such event"})
+        return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "همچین رویدادی وجود ندارد"})
 
     try:
         discount = Discount.objects.get(code=request.POST['discount_code'], event_group=event.event_group)
     except:
-        return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "no such discount for this event"})
+        return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "این کد تخفیف برای این رویداد نامعتبر است"})
 
     invoice_cleaner()
 
     if Invoice.objects.filter(discount_pk = discount.pk, active=1).count() >= discount.capacity :
-        return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "this discount is capacity is full"})
+        return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است"})
 
     return JsonResponse({"status" : "ok", "result" : "ok", "percent" : discount.percent})
