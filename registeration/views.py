@@ -9,7 +9,7 @@ from zeep import Client
 
 from django.contrib.auth.models import User
 
-from .models import Person, Invoice, Event, Discount
+from .models import Person, Invoice, Event, Discount, EventGroup
 
 from . import secret
 
@@ -171,8 +171,8 @@ def home_view(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('registeration:login'))
     template = 'registeration/home.html'
-    events = Event.objects.all()
-    return render(request,template,{'events' : events})
+    event_groups = EventGroup.objects.all()
+    return render(request,template,{'event_groups' : event_groups})
 
 def show_off_view(request):
     template = 'registeration/show_off.html'
@@ -301,15 +301,16 @@ def invoice_cleaner():
             invoice.active=0
             invoice.save()
 
-def event_view(request, event_pk):
+def event_group_view(request, event_group_pk):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("registeration:login"))
-    template = 'registeration/event.html'
+    template = 'registeration/event_group.html'
     try:
-        event = Event.objects.get(pk=event_pk)
+        event_group = EventGroup.objects.get(pk=event_group_pk)
     except:
         return error(request)
-    return render(request, template, {'event' : event})
+    events = EventGroup.event_set.all()
+    return render(request, template, {'events' : events})
 
 
 @csrf_exempt
