@@ -309,7 +309,7 @@ def event_group_view(request, event_group_pk):
         event_group = EventGroup.objects.get(pk=event_group_pk)
     except:
         return error(request)
-    events = EventGroup.event_set.all()
+    events = EventGroup.event_set
     return render(request, template, {'events' : events})
 
 
