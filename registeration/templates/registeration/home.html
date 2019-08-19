@@ -4,6 +4,6 @@
 <p>no place like home</p>
 <ul>
   {% for event_group in event_groups %}
-  <li><a href="{% url 'registeration:event_group' event.pk %}">{{ event_group.name }}</a></li>
+  <li><a href="{% url 'registeration:event_group' event_group.pk %}">{{ event_group.name }}</a></li>
   {% endfor %}
 </ul>
