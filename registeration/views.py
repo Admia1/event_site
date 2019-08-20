@@ -314,7 +314,7 @@ def event_group_view(request, event_group_pk):
 
 
 @csrf_exempt
-def discount_check_api(request, event_pk):
+def discount_check_api(request, event_group_pk):
     # if not request.user.is_authenticated:
     #     return JsonResponse({"status" : "error", "error_message" : "access denied"})
 
@@ -325,12 +325,12 @@ def discount_check_api(request, event_pk):
         return JsonResponse({"status" : "error", "error_message" : "bad json format"})
 
     try:
-        event = Event.objects.get(pk=event_pk)
+        event_group = EventGroup.objects.get(pk=event_group_pk)
     except:
         return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "همچین رویدادی وجود ندارد"})
 
     try:
-        discount = Discount.objects.get(code=request.POST['discount_code'], event_group=event.event_group)
+        discount = Discount.objects.get(code=request.POST['discount_code'], event_group=event_group)
     except:
         return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "این کد تخفیف برای این رویداد نامعتبر است"})
 
