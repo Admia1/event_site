@@ -102,7 +102,7 @@ def register_view(request):
             error_message = register_post_validator(request.POST)
             if not error_message:
                 # if user didnt registered before
-                if ~(Person.objects.filter(national_id = request.POST['national_id']).exists()):
+                if not Person.objects.filter(national_id = request.POST['national_id']).exists():
                     # then create the user
                     user = User(
                         username = request.POST['email'],
