@@ -106,4 +106,4 @@ class Discount(models.Model):
     detail = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.percent + "% " + self.detail
+        return string(self.percent) + "% " + self.detail
