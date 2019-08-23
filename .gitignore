@@ -133,3 +133,6 @@ venv.bak/
 
 # statics
 local_data
+
+# videos
+*.mp4
