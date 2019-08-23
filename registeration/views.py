@@ -94,7 +94,7 @@ def register_post_validator(post):
 def register_view(request):
     template = 'registeration/register.html'
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('registeration:home'))
+        return HttpResponseRedirect(reverse('registeration:user_page'))
     else:
         if request.method == 'POST':
             #validation of data
@@ -135,7 +135,7 @@ def register_view(request):
                         comment = "should not happen"
                     person.save()
                     login(request, user)
-                    return HttpResponseRedirect(reverse('registeration:home'))
+                    return HttpResponseRedirect(reverse('registeration:user_page'))
 
                 else:
                     return render(request,template,{'error_message': "شما قبلا این بلیط را خریده اید"})
@@ -148,7 +148,7 @@ def register_view(request):
 def login_view(request):
     template = 'registeration/login.html'
     if request.user.is_authenticated :
-        return HttpResponseRedirect(reverse('registeration:home'))
+        return HttpResponseRedirect(reverse('registeration:user_page'))
 
     if request.method == 'POST':
         if 'username' in request.POST and 'password' in request.POST:
@@ -156,7 +156,7 @@ def login_view(request):
                 user = User.objects.get(username=request.POST['username'])
                 if user.check_password(request.POST['password']):
                     login(request, user)
-                    return HttpResponseRedirect(reverse('registeration:home'))
+                    return HttpResponseRedirect(reverse('registeration:user_page'))
                 else:
                     return render(request, template, {'error_message': 'رمز عبور نادرست است'})
             else:
@@ -167,10 +167,10 @@ def login_view(request):
     return render(request, template)
 
 
-def home_view(request):
+def user_page_view(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('registeration:login'))
-    template = 'registeration/home.html'
+    template = 'registeration/user_page.html'
     event_groups = EventGroup.objects.all()
     return render(request,template,{'event_groups' : event_groups})
 
@@ -206,14 +206,14 @@ def verify_view(request):
             invoice.active = 0
             invoice.save()
 
-    return HttpResponseRedirect(reverse('registeration:home'))
+    return HttpResponseRedirect(reverse('registeration:user_page'))
 
 
 def purchase_view(request, event_pk):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('registeration:login'))
 
-    template = 'registeration/home.html'
+    template = 'registeration/user_page.html'
     try :
         person = Person.objects.get(user=request.user)
     except:
