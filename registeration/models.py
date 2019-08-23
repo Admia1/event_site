@@ -9,6 +9,9 @@ class EventGroup(models.Model):
     name = models.CharField(max_length=100)
     detail = models.TextField(max_length=1000)
 
+    def __str__(self):
+        return  self.name
+
 class Person(models.Model):
     user = models.ForeignKey(User ,on_delete=models.CASCADE)
 
@@ -33,6 +36,9 @@ class Person(models.Model):
 
     hotel = models.CharField(null=True, blank=True, max_length = 100)
     #city = models.CharField(default="-", max_length = 100)
+
+    def __str__(self):
+        return self.first_name + " " + self.last_name
 
     def is_staff(self):
         return self.person_type == 1
@@ -61,6 +67,9 @@ class Event(models.Model):
 
     event_group = models.ForeignKey(EventGroup, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return event_group.name + " : " + self.name
+
 class Invoice(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -79,6 +88,13 @@ class Invoice(models.Model):
     def is_successful(self):
         return self.status == 0
 
+    def __str__(self):
+        if self.paid:
+            return amount + "$"
+        if not self.active:
+            return "خارج از دور"
+        return "در حال پرداخت"
+
 
 class Discount(models.Model):
     percent = models.IntegerField(default=0)
@@ -88,3 +104,6 @@ class Discount(models.Model):
     capacity = models.IntegerField(default=0)
 
     detail = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.percent + "% " + self.detail
