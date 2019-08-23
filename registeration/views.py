@@ -175,7 +175,9 @@ def user_page_view(request):
         return HttpResponseRedirect(reverse('registeration:login'))
     template = 'registeration/user_page.html'
     event_groups = EventGroup.objects.all()
-    return render(request,template,{'event_groups' : event_groups})
+    person = Person.objects.get(user=request.user)
+    tickets = Invoice.objects.filter(paid=1, person=person)
+    return render(request,template,{'event_groups' : event_groups, 'tickets' : tickets})
 
 def home_view(request):
     template = 'registeration/home.html'

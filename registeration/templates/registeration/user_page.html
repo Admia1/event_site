@@ -7,3 +7,9 @@
   <li><a href="{% url 'registeration:event_group' event_group.pk %}">{{ event_group.name }}</a></li>
   {% endfor %}
 </ul>
+
+<h1>your tickets</h1>
+{% for ticket in tickets %}
+  <p>رویداد : </p>
+  <p>{{ticket.event.name}}</p>
+{% endfor %}
