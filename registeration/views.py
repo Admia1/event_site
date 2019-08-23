@@ -63,9 +63,10 @@ def register_post_validator(post):
     type = int(post['detail_type'])
 
     if type == 0:
-        res = string_type_validator("guide_id", 99)
-        if res:
-            return res
+        # res = string_type_validator("guide_id", 99)
+        # if res:
+        #     return res
+        comment = "do nothing"
 
     elif type == 1:
         for checking_field in ["university", "study_field", "student_id"]:
@@ -118,7 +119,9 @@ def register_view(request):
 
                     type = person.detail_type
                     if type == 0:
-                        person.guide_id = request.POST['guide_id']
+                        if 'guide_id' in request.POST:
+                            if request.POST['guide_id']:
+                                person.guide_id = request.POST['guide_id']
                     elif type == 1:
                         person.university = request.POST['university']
                         person.study_field = request.POST['study_field']

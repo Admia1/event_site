@@ -22,16 +22,16 @@ class Person(models.Model):
 
     detail_type = models.IntegerField(default = 4)
 
-    guide_id = models.CharField(default="-", max_length = 100)
+    guide_id = models.CharField(null=True, blank=True, max_length = 100)
 
-    university = models.CharField(default="-", max_length = 100)
-    study_field = models.CharField(default="-", max_length = 100)
-    student_id = models.CharField(default="-", max_length = 100)
+    university = models.CharField(null=True, blank=True, max_length = 100)
+    study_field = models.CharField(null=True, blank=True, max_length = 100)
+    student_id = models.CharField(null=True, blank=True, max_length = 100)
 
-    agancy = models.CharField(default="-", max_length = 100)
-    city = models.CharField(default="-", max_length = 100)
+    agancy = models.CharField(null=True, blank=True, max_length = 100)
+    city = models.CharField(null=True, blank=True, max_length = 100)
 
-    hotel = models.CharField(default="-", max_length = 100)
+    hotel = models.CharField(null=True, blank=True, max_length = 100)
     #city = models.CharField(default="-", max_length = 100)
 
     def is_staff(self):
