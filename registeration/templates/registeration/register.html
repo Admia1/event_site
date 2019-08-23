@@ -1,27 +1,266 @@
+<!DOCTYPE html>
 
-<head>
-  <title>Register page</title>
-</head>
-<body>
-<p>Register page</p>
-{% if error_message%}
-<p style="color:red">{{ error_message }}</p>
-{% endif %}
-<form action="{% url 'registeration:register' %}" method="post">
-{% csrf_token %}
-<p>first name</p><input type="text" name="first_name" value="">
-<p>last name</p><input type="text" name="last_name" value="">
-<p>national id</p><input type="number" name="national_id" value="">
-<p>phone number</p><input type="number" name="phone_number" value="">
-<p>email</p><input type="email" name="email" value="">
-<p>detail type</p><input type="numer" name="detail_type" value="">
-<p>guide id</p><input type="text" name="guide_id" value="">
-<p>university</p><input type="text" name="university" value="">
-<p>study field</p><input type="text" name="study_field" value="">
-<p>student_id</p><input type="number" name="student_id" value="">
-<p>agency</p><input type="text" name="agency" value="">
-<p>city</p><input type="text" name="city" value="">
-<p>hotel</p><input type="text" name="hotel" value="">
-<input type="submit" value="submit">
-</form>
-</body>
+{% load static %}
+
+<html>
+
+
+    <head>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>رویداد های آکادمیک</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'register/register.css' %}"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
+    </head>
+
+
+
+
+    <body id="body">
+
+
+        <div id="fixed_menu">
+
+            <a id="sign_fm" href="{% url 'registeration:login' %}">
+                ورود
+            </a>
+
+            <a id="exit_fm" href="{% url 'registeration:logout' %}">
+                خروج
+            </a>
+
+            <img id="logo_fm" src="{% static 'register/photo1.jpg' %}">
+
+        </div>
+
+        {% if error_message %}
+          <p style="color:red">{{ error_message }}</p>
+        {% endif %}
+
+
+        <form id="main_form" class="ui form" action="{% url 'registeration:register' %}" method="post">
+          {% csrf_token %}
+
+            <div id="div_img_form">
+
+                <img id="img_form" src="{% static 'register/photo2.jpg' %}">
+
+            </div>
+
+            <div class="ui horizontal divider" id="h_page">
+
+                <span id="content_h_page">
+                    ثبت نام
+                </span>
+
+            </div>
+
+            <div id="content_form">
+
+                <div class="ui message error" id="validation-message">
+
+                </div>
+
+
+                <!-- <div class="three fields"> -->
+
+                    <div class="two fields" id="name_two_fields">
+
+                        <div class="field" id="a1">
+
+                            <input type="text" id="first_name" name="first_name" placeholder="نام">
+                            <span id="span1"> <i class="user icon"></i> </span>
+
+                        </div>
+
+                        <div class="field" id="a2">
+
+                            <input type="text" id="last_name" name="last_name" placeholder="نام خانوادگی">
+                            <span id="span2"> <i class="user icon"></i> </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="two fields" id="id_two_fields">
+
+                        <div class="field" id="a3">
+
+                            <input type="text" id="national_id" name="national_id" placeholder="کد ملی">
+                            <span id="span3"> <i class="address card icon"></i> </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                <!-- </div> -->
+
+
+
+
+                <div class="ui selection dropdown" id="dp">
+                    <input type="hidden" name="detail_type">
+                    <div class="default text">حیطه فعالیت</div>
+                    <i class="angle down icon" id="i1"></i>
+                    <div class="menu" id="dp_menu">
+                        <div class="item" data-value="0" id="item1">راهنمای گردشگری</div>
+                        <div class="item" data-value="1" id="item2">دانشجو</div>
+                        <div class="item" data-value="2" id="item3">کارمند دفاتر مسافری / تور اپراتور</div>
+                        <div class="item" data-value="3" id="item4">کارمند هتل</div>
+                        <div class="item" data-value="4" id="item5">آزاد</div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="three fields">
+
+
+                        <div class="field" id="a6">
+
+                            <input type="text" id="guide_id" name="guide_id" placeholder="کد راهنما ( اختیاری )">
+                            <span id="span6"> <i class="hashtag icon"></i> </span>
+
+                        </div>
+
+                        <!-- <div class="field" id="a7">
+
+                            <input type="text" id="unknown" name="unknown" placeholder="ناشناس">
+                            <span id="span7"> <i class="hashtag icon"></i> </span>
+
+                        </div>                 -->
+
+                        <div class="field" id="a8">
+
+                            <input type="text" id="university" name="university" placeholder="دانشگاه محل تحصیل">
+                            <span id="span8"> <i class="university icon"></i> </span>
+
+                        </div>
+
+                        <div class="field" id="a9">
+
+                            <input type="text" id="study_field" name="study_field" placeholder="رشته ی تحصیلی">
+                            <span id="span9"> <i class="book icon"></i> </span>
+
+                        </div>
+
+                        <div class="field" id="a10">
+
+                            <input type="text" id="student_id" name="student_id" placeholder="شماره دانشجویی">
+                            <span id="span10"> <i class="graduation cap icon"></i> </span>
+
+                        </div>
+
+                        <div class="field" id="a11">
+
+                            <input type="text" id="agency" name="agency" placeholder="نام آژانس">
+                            <span id="span11"> <i class="plane icon"></i> </span>
+
+                        </div>
+
+                        <div class="field" id="a13">
+
+                            <input type="text" id="hotel" name="hotel" placeholder="نام هتل">
+                            <span id="span13"> <i class="home icon"></i> </span>
+
+                        </div>
+
+                        <div class="field" id="a12">
+
+                            <input type="text" id="city" name="city" placeholder="شهر">
+                            <span id="span12"> <i class="map signs icon"></i> </span>
+
+                        </div>
+
+
+
+                        <!-- <div class="field" id="a14">
+
+                            <input type="text" id="city2" name="city2" placeholder="شهر">
+                            <span id="span14"> <i class="map signs icon"></i> </span>
+
+                        </div> -->
+
+
+
+                    </div>
+
+
+
+                <div class="two fields">
+
+                    <div class="field" id="a4">
+
+                        <input type="text" id="email" name="email" placeholder="ایمیل">
+                        <span id="span4"> <i class="envelope icon"></i> </span>
+
+                    </div>
+
+                    <div class="field" id="a5">
+
+                        <input type="text" id="phone_number" name="phone_number" placeholder="شماره تماس">
+                        <span id="span5"> <i class="phone icon"></i> </span>
+
+                    </div>
+
+                </div>
+
+                <div id="divsubmit">
+
+                    <button id="b1">Submit</button>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+        </form>
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        <script src="{% static 'register/register.js' %}"></script>
+
+    <script>
+ $(document).ready(function(){
+
+    $('.dropdown')
+        .dropdown({
+            // you can use any ui transition
+        transition: 'drop'
+    });
+
+
+
+
+ });
+    </script>
+
+
+    </body>
+
+
+
+</html>

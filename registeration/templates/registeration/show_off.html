@@ -1,22 +1,67 @@
-{% load static %}
 <!DOCTYPE html>
+
+{% load static %}
+
 <html>
 
     <head>
 
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>HomePage</title>
+        <title>رویداد های آکادمیک</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'registeration/show_off.css' %}">
+        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'show_off/show_off.css' %}"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
     </head>
+    <body id="b1">
 
-    <body onload="checkdevice()">
+
+        <div class="ui right sidebar inverted vertical menu">
+
+            <a class="item" href="#about_event">
+                درباره ی رویداد<i class="info icon"></i>
+            </a>
+
+            <a class="item" href="#speecher">
+                سخنران اصلی رویداد<i class="user icon"></i>
+            </a>
+
+            <a class="item" href="#caption">
+                سرفصل های رویداد<i class="bookmark icon"></i>
+            </a>
+
+            <a class="item" href="#audience">
+                مخاطبان رویداد<i class="users icon"></i>
+            </a>
+
+            <a class="item" href="#location">
+                برگزار کننده<i class="check circle icon"></i>
+            </a>
+
+            <a class="item" href="{%url 'registeration:login' %}">
+                ثبت نام<i class="pencil alternate icon"></i>
+            </a>
+
+            <a class="item" href="{% url 'registeration:login' %}">
+                ورود<i class="user circle icon"></i>
+            </a>
+        </div>
+        <div class="ui basic modal">
+
+            <div id="modal_header">ما را در شبکه های مجازی دنبال کنید</div>
+            <div id="modal_content">
+                <img src="{%static 'show_off/instagram-logo.png' %}" id="modal_img">
+            </div>
+            <div id="modal_bottom">
+                <button id="modal_button">مشاهده</button>
+                <button id="close_modal">
+                    بستن
+                </button>
+            </div>
+        </div>
 
         <div id="main_header">
 
@@ -24,17 +69,38 @@
 
         </div>
 
+        <div class="ui pusher">
+
         <div id="fixed_menu">
-            <a id="home_fm" href="{% url 'registeration:home' %}">
+
+            <div class="ui large pointing dropdown link item" id="home_fm" href="#">
+                <span id="home_span">
+                <i class="angle down icon" id="icon_home"></i>
                 خانه
-            </a>
+                </span>
+                <div class="menu" id="home_menu">
+                        <a class="item item_home" href="#about_event">درباره ی رویداد</a>
+                        <a class="item item_home" href="#location">برگزارکننده</a>
+                        <a class="item item_home" href="#speecher">سخنران رویداد</a>
+                        <a class="item item_home" href="#caption">سرفصل ها</a>
+                        <a class="item item_home" href="#audience">مخاطبان دوره</a>
+                </div>
+            </div>
+
             <a id="sign_fm" href="{% url 'registeration:register' %}">
                 ثبت نام
             </a>
+
             <a id="login_fm" href="{% url 'registeration:login' %}">
                 ورود
             </a>
-            <img id="logo_fm" src="{% static 'registeration/photo1.jpg' %}">
+
+            <i class="bars icon" id="icon_bars_fm"></i>
+
+            <img title="ما را در شبکه های مجازی دنبال کنید" src="{% static 'show_off/instagram-logo.png' %}" id="insta_logo">
+
+            <img id="logo_fm" src="{% static 'show_off/photo1.jpg' %}">
+
         </div>
 
         <div id="content">
@@ -42,10 +108,14 @@
             <div class="ui piled segment" id="about_event">
 
                 <h2 id="h_about_event">
-                    درباره ی رویداد :
+                    درباره ی رویداد
                 </h2>
 
-                <br>
+                <div id="div_video">
+                    <video id="video_event" controls>
+                        <source src="{% static 'media/wolfgang.mp4' %}" type="video/mp4">
+                    </video>
+                </div>
 
                 توسعه گردشگری ورودی  به عنوان
                 یکی از پتانسیل های های اصلی هرکشور ی در راه  ایجاد رونق اقتصادی و اشتغال و افزایش سطح درآمد ملی تلقی می شود. حال آن که
@@ -71,14 +141,14 @@
 
                     <div class="image">
 
-                        <img id="location_img" src="{% static 'registeration/p1.jpg' %}">
+                        <img id="location_img" src="{% static 'show_off/Amazing Cityscapes HD Wallpapers (Downloadha (36).jpg' %}">
 
                     </div>
 
                     <div class="content">
 
                         <div class="description" id="location_description">
-                            مرکز آموزش های تخصصی دانشگاه شیراز
+                            مرکز آموزش های آزاد و تخصصی دانشگاه شیراز
                         </div>
 
                     </div>
@@ -96,6 +166,14 @@
 
                     <div id="address_span">
                         شیراز – خیابان قصرالدشت – نبش خیابان قم آباد - جنب دانشکده دندانپزشکی
+                    </div>
+
+                    <div id="link_location">
+                        <a href="https://goo.gl/maps/yWc8WYSuiQcKKmMRA" target="blank">
+                            <div class="image">
+                                <img id="location_shiraz" src="{% static 'show_off/location3.jpg' %}">
+                            </div>
+                        </a>
                     </div>
 
                 </div>
@@ -143,7 +221,7 @@
 
                 <br>
 
-                <img class="ui centered medium image" id="speecher_img" src="{% static 'registeration/p1.jpg' %}">
+                <img class="ui centered circular image" id="speecher_img" src="{% static 'show_off/prof.jpg' %}">
                 <br>
 
                 پروفسور <span id="span_speecher1">Dr. Wolfgang Georg Arlt FRGS FRAS</span> &nbsp موسس مجموعه تحقیقاتی <span id="span_speecher2">COTRI</span>  و همچنین استاد گردشگری بسیاری از دانشگاه های مطرح دنیاست. تجربیات کاری و اکادمیک وی از صنعت گردشگری چین به بیش از چهار دهه می رسد.
@@ -233,11 +311,6 @@
                 <br>
                 <br>
 
-
-
-
-
-
                 <span id="time2">ورکشاپ عصر&nbsp (14 الی 17) &nbsp:</span>
 
                 <br>
@@ -286,15 +359,7 @@
                     چطور خود را آماده کنیم و چطور موفق شویم؟
                     <div class="ui divider"></div>
                 </span>
-
-
             </div>
-
-
-
-
-
-
             <div class="ui piled segment" id="audience">
 
                 <h2 id="h_audience">
@@ -302,9 +367,7 @@
                     &nbsp
                     مخاطبان دوره :
                 </h2>
-
                 <br>
-
                 <i class="user icon" id="i26"></i>
                 &nbsp
                 فعالان صنعت گردشگری ایران
@@ -322,11 +385,9 @@
                 &nbsp
                 علاقه مندان به صنعت گردشگری و مهمان نوازی
 
-
             </div>
-
         </div>
-
+    </div>
+        <script src="{% static 'show_off/show_off.js' %}"></script>
     </body>
-
 </html>
