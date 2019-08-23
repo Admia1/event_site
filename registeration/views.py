@@ -255,7 +255,7 @@ def purchase_view(request, event_pk):
             invoice.active=0
             n_invoice.save()
             invoice.save()
-            send_to_zarin(request, invoice)
+            return send_to_zarin(request, invoice)
 
     if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
         invoice_cleaner()# :/
@@ -290,7 +290,7 @@ def purchase_view(request, event_pk):
             invoice.save()
             return render(request, template, {'error_message' : 'دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است'})
 
-    send_to_zarin(request, invoice)
+    return send_to_zarin(request, invoice)
 
 
 
