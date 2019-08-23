@@ -236,7 +236,7 @@ def purchase_view(request, event_pk):
             discount = Discount.objects.get(event_group=event.event_group, code=request.POST['discount_code'])#debug event
             discount_pk = discount.pk
         except:
-            return render(request, template, {'error_message' : 'این کد تخفیف نامعتبر است'%request.POST['discount_code']})
+            return render(request, template, {'error_message' : 'این کد تخفیف نامعتبر است'})
     else:
         discount_pk = 0
     if Invoice.objects.filter(event=event, person=person, paid=1).exists():
