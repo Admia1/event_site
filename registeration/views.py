@@ -174,8 +174,8 @@ def user_page_view(request):
     event_groups = EventGroup.objects.all()
     return render(request,template,{'event_groups' : event_groups})
 
-def show_off_view(request):
-    template = 'registeration/show_off.html'
+def home_view(request):
+    template = 'registeration/home.html'
     return render(request,template)
 
 def verify_view(request):
@@ -289,7 +289,7 @@ def purchase_view(request, event_pk):
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
-    return HttpResponseRedirect(reverse('registeration:show_off'))
+    return HttpResponseRedirect(reverse('registeration:home'))
 
 def error(request):
     return HttpResponse("error")

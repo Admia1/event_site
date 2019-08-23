@@ -15,5 +15,5 @@ urlpatterns = [
     path('verify/', views.verify_view, name="verify"),
     path('error/', views.error, name="error"),
     path('api/discount_check/<int:event_group_pk>/', views.discount_check_api, name="discount_check"),
-    path('', views.show_off_view, name="show_off")
+    path('', views.home_view, name="home")
 ]
