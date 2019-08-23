@@ -68,7 +68,7 @@ class Event(models.Model):
     event_group = models.ForeignKey(EventGroup, on_delete=models.PROTECT)
 
     def __str__(self):
-        return event_group.name + " : " + self.name
+        return self.event_group.name + " : " + self.name
 
 class Invoice(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
