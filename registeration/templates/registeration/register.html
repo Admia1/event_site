@@ -36,31 +36,37 @@
 
         </div>
 
-        {% if error_message %}
-          <p style="color:red">{{ error_message }}</p>
-        {% endif %}
+                            <div id="div_img_form">
+
+                                <img id="img_form" src="{% static 'register/photo2.jpg' %}">
+
+                            </div>
+
+                                        <div class="ui horizontal divider" id="h_page">
+
+                                            <span id="content_h_page">
+                                                ثبت نام
+                                            </span>
+
+                                        </div>
 
 
+            {% if error_message %}
+            <div class="ui message error validation-message" style="width: 65%; margin: auto;">
+                <ul>
+                  <li>
+                    {{ error_message }}
+                  </li>
+                </ul>
+            </div>
+            {% endif %}
         <form id="main_form" class="ui form" action="{% url 'registeration:register' %}" method="post">
           {% csrf_token %}
 
-            <div id="div_img_form">
-
-                <img id="img_form" src="{% static 'register/photo2.jpg' %}">
-
-            </div>
-
-            <div class="ui horizontal divider" id="h_page">
-
-                <span id="content_h_page">
-                    ثبت نام
-                </span>
-
-            </div>
-
             <div id="content_form">
 
-                <div class="ui message error" id="validation-message">
+
+                <div class="ui message error validation-message" id="validation-message">
 
                 </div>
 

@@ -9,9 +9,9 @@
     background-color:white;
     background-attachment: fixed;
     padding-top:130px;
-    
 
-    
+
+
 }
 
 @font-face
@@ -19,9 +19,9 @@
     font-family: 'yekan';
     font-style: normal;
 	font-weight: 300;
-    src:url(yekan.eot?#) format('embedded-opentype'),    
+    src:url(yekan.eot?#) format('embedded-opentype'),
           url(yekan.woff) format('woff'),
-          url(yekan.ttf) format('truetype'); 
+          url(yekan.ttf) format('truetype');
 }
 
 
@@ -94,7 +94,7 @@
     height:100%;
     width:90px;
     text-align:center;
-    
+
     font-size:16px;
     line-height:60px;
     color:rgb(45, 52, 54);
@@ -337,7 +337,7 @@ span
     position:relative;
     top:-48%;
     left:-2%;
-    float:right;  
+    float:right;
     color:crimson;
 }
 
@@ -378,13 +378,13 @@ span
 }
 
 
-#validation-message, #validation-message .list:not(.ui) li, #validation-message li {
+.validation-message, .validation-message .list:not(.ui) li, .validation-message li {
     direction: rtl !important;
     text-align: right !important;
     font-family:Yekan;
     border-radius:8px;
 }
-#validation-message .list:not(.ui) li:before {
+.validation-message .list:not(.ui) li:before {
     position: initial !important;
     content: '•';
     margin-left: 10px;
@@ -455,5 +455,3 @@ span
     }
 
 }
-
-
