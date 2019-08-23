@@ -215,6 +215,7 @@ def verify_view(request):
 
 
 def purchase_view(request, event_pk):
+    invoice_cleaner()
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('registeration:login'))
 
