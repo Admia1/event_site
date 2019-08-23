@@ -226,8 +226,34 @@ def purchase_view(request, event_pk):
     except:
         return render(request, template, {'error_message': 'همچین رویدادی وجود ندارد'})
 
+    if request.method != 'POST':
+        return error(request)
+    if 'discount_code' not in request.POST:
+        return error(request)
+
+    if request.POST['discount_code']:
+        try:
+            discount = Discount.objects.get(event_group=event.event_group, code=request.POST['discount_code'])#debug event
+            discount_pk = discount.pk
+        except:
+            return render(request, template, {'error_message' : 'این کد تخفیف نامعتبر است'%request.POST['discount_code']})
+    else:
+        discount_pk = 0
     if Invoice.objects.filter(event=event, person=person, paid=1).exists():
         return render(request, template, {'error_message':'شما قبلا بلیط این رویداد را خریداری کرده اید'})
+
+    #cheat the cheaters
+    for invoice in Invoice.objects.filter(active=1, paid=0, event=event, discount_pk=discount_pk, person=person):
+        if datetime.datetime.now() - invoice.created_date > datetime.timedelta(minutes=15):
+            #come back so soon ? use old link
+            return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
+        else:
+            #else make new and kill old :D
+            n_invoice = Invoice(active=1, paid=0, person=invoice.person, amount=invoice.amount, event=invoice.event)
+            invoice.active=0
+            n_invoice.save()
+            invoice.save()
+            send_to_zarin(request, invoice)
 
     if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
         invoice_cleaner()# :/
@@ -245,36 +271,35 @@ def purchase_view(request, event_pk):
     #cant turn off other invoices of this person :(
     #change amount for off here
 
-    if request.method == 'POST':
-        if 'discount_code' in request.POST:
-            if request.POST['discount_code']:
-                try:
-                    discount = Discount.objects.get(event_group=event.event_group, code=request.POST['discount_code'])#debug event
-                except:
-                    invoice.avtive=0
-                    invoice.save()
-                    return render(request, template, {'error_message' : 'این کد تخفیف نامعتبر است'%request.POST['discount_code']})
-                if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() >= discount.capacity:
-                    invoice.active=0
-                    invoice.save()
-                    return render(request, template, {'error_message' : 'دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است'})
+    if request.POST['discount_code']:
+        if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() >= discount.capacity:
+            invoice.active=0
+            invoice.save()
+            return render(request, template, {'error_message' : 'دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است'})
 
-                invoice.discount_pk = discount.pk
+        invoice.discount_pk = discount.pk
 
-                if discount.percent >= 0 and discount.percent <= 100:
-                    invoice.amount = invoice.amount * (100 - discount.percent) / 100
-                    invoice.save()
+        if discount.percent >= 0 and discount.percent <= 100:
+            invoice.amount = invoice.amount * (100 - discount.percent) / 100
+            invoice.save()
 
-                if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() > discount.capacity:
-                    invoice.active=0
-                    invoice.save()
-                    return render(request, template, {'error_message' : 'دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است'})
+        if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() > discount.capacity:
+            invoice.active=0
+            invoice.save()
+            return render(request, template, {'error_message' : 'دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است'})
 
+    send_to_zarin(request, invoice)
+
+
+
+
+def send_to_zarin(request, invoice):
+    template = 'registeration/user_page'
     MERCHANT = secret.MERCHANT
     client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
-    description = "جهت خرید بلیط"                 # Required
-    email  = person.email                         # Optional
-    mobile = person.phone_number                  # Optional
+    description = "جهت خرید بلیط "  + invoice.event.name               # Required
+    email  = invoice.person.email                         # Optional
+    mobile = invoice.person.phone_number                  # Optional
     CallbackURL = 'http://academic-events.ir/verify/' # Important: need to edit for realy server.
 
     amount = invoice.amount
