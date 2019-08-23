@@ -35,7 +35,7 @@ class Person(models.Model):
     #city = models.CharField(default="-", max_length = 100)
 
     def is_staff(self):
-        return self.person_id == 1
+        return self.person_type == 1
 
     def person_type_show(self):
         type_dictionary = {
