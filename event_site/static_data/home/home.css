@@ -150,15 +150,15 @@ html
     text-shadow: 5px 3px 10px #000000;
     color: white;
     display:table-cell;
-    line-height:75px;
+    line-height:60px;
     font-family:Yekan;
-    font-size:32px;
+    font-size:27px;
     font-weight:700;
     text-align:center;
     position: absolute;
     width:auto;
-    padding: 30px;
-    top: 50%;
+    padding: 0px;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -851,7 +851,7 @@ html
         background-attachment: fixed; */
     }
     
-    #main_header1
+    /* #main_header1
     {
         display:table-cell;
         line-height:75px;
@@ -864,7 +864,7 @@ html
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-    }
+    } */
     
     #fixed_menu
     {
