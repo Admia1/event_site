@@ -138,7 +138,7 @@ def register_view(request):
                         comment = "should not happen"
                     person.save()
                     login(request, user)
-                    return HttpResponseRedirect(reverse('registeration:user_page'))
+                    return HttpResponseRedirect(reverse('registeration:event_group', kwargs={'event_group_pk':1}))
 
                 else:
                     return render(request,template,{'error_message': "شما قبلا این بلیط را خریده اید"})
@@ -151,7 +151,7 @@ def register_view(request):
 def login_view(request):
     template = 'registeration/login.html'
     if request.user.is_authenticated :
-        return HttpResponseRedirect(reverse('registeration:user_page'))
+        return HttpResponseRedirect(reverse('registeration:event_group', kwargs={'event_group_pk':1}))
 
     if request.method == 'POST':
         if 'username' in request.POST and 'password' in request.POST:
@@ -159,7 +159,7 @@ def login_view(request):
                 user = User.objects.get(username=request.POST['username'])
                 if user.check_password(request.POST['password']):
                     login(request, user)
-                    return HttpResponseRedirect(reverse('registeration:user_page'))
+                    return HttpResponseRedirect(reverse('registeration:event_group', kwargs={'event_group_pk':1}))
                 else:
                     return render(request, template, {'error_message': 'رمز عبور نادرست است'})
             else:
@@ -215,6 +215,9 @@ def verify_view(request):
 
 
 def purchase_view(request, event_pk):
+    print(request.POST)
+    return render(request, 'registeration/user_page.html', {'error_message':'ظرفیت این رویداد به اتمام رسیده است'})
+
     invoice_cleaner()
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('registeration:login'))

@@ -1,16 +1,310 @@
+<!DOCTYPE html>
 
-{% for event in events %}
-<p>
-  {{event.name}}
-</p>
+{% load static %}
 
-<p>
-  {{ event.price }} تومان
-</p>
-<form action="{% url 'registeration:purchase' event.pk %}" method="post">
-  {% csrf_token %}
-  <input type="text" name="discount_code" value="">
-  <input type="submit" name="" value="خرید‍‍‍">
-</form>
+<html>
 
-{% endfor %}
+    <head>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>HomePage</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'event_group/event_group.css' %}"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.21/vue.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        
+
+    </head>
+
+
+
+
+    <body>
+
+        <div id="main">
+          <div class="ui active dimmer" v-if="loading">
+              <div class="ui text loader"> <span id="load">... در حال بارگذاری</span> </div>
+          </div>
+
+
+
+
+
+
+            <div class="ui basic modal">
+
+                <div class="ui active dimmer" v-if="loading">
+                    <div class="ui text loader"> <span id="load">... در حال بارگذاری</span> </div>
+                </div>
+                <div id="modal_header">کد تخفیف خود را وارد کنید</div>
+
+                <div id="modal_content">
+
+                        <input type="text" v-model="discountCode" name="discount" id="discount" placeholder="کدتخفیف">
+                        <button @click="discountValidation" id="activate_discount">ثبت</button>
+                    
+                </div>
+                    
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div id="fixed_menu">
+
+                <a id="sign_fm" href="#">
+                    ثبت نام
+                </a>
+
+                <a id="exit_fm" href="#">
+                    خروج
+                </a>
+
+                <img id="logo_fm" src="{% static 'event_group/photo1.jpg' %}">
+        
+            </div>
+
+            <div id="content">
+
+                <div id="three_steps">
+
+
+                    <div class="ui three top attached mini steps">
+
+                        <div class="step">
+
+                            <i class="pencil alternate icon" id="i1"></i>
+
+                            <div class="content">
+
+                                <div class="title" id="t1">ثبت نام</div>
+
+                            </div>
+
+                        </div>
+        
+                        <div class="active step">
+
+                            <i class="map signs icon" id="i2"></i>
+
+                            <div class="content">
+
+                                <div class="title" id="t2">انتخاب رویداد</div>
+
+                            </div>
+
+                        </div>
+        
+                        <div class="disabled step">
+
+                            <i class="payment icon"></i>
+
+                            <div class="content">
+
+                                <div class="title" id="t3">پرداخت هزینه</div>
+
+                            </div>
+
+                        </div>
+        
+                    </div>
+
+
+                </div>
+
+                <div id="main_content">
+
+                    <form class="ui card event_card" :action="event.form_action_url" method="post" v-for="event in events">
+
+                    {% csrf_token %}
+                          <input type="hidden" v-model="discountCode" />
+                    {% verbatim %}
+                        <div class="content content_header">
+
+                            <h3 class="ui center aligned header title_city">
+                                {{ event.location }}
+                            </h3>
+
+                        </div>
+
+                        <div class="content event_content">
+                            
+                          <h4 class="ui sub header">اطلاعات رویداد</h4>
+                          <div class="ui small feed">
+                            <div class="event">
+                              <div class="content">
+                                <div class="summary">
+                                   <a>Elliot Fu</a> added <a>Jenny Hess</a> to the project
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="extra content">
+
+                            <button class="ui animated button pay_event" tabindex="0">
+
+                                <div class="visible content v1"><i class="payment icon i4"></i>پرداخت</div>
+
+                                <div class="hidden content">
+                                    <i class="right arrow icon"></i>
+                                </div>
+
+                            </button>
+
+                            <div class="ui button goto_discount">
+                                کد تخفیف
+                                <i class="gift icon i5"></i>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- <div class="left_content" v-for="event in events">
+
+                        <h3 class="ui center aligned block header" id="title_city1">
+                            {{ event.location }}
+                        </h3>
+
+                        <div id="main_left_content">
+                            <template v-if="discountPercent">
+                                {{ event.price }} - {{ event.price - event.price / 100 * discountPercent }}
+                            </template>
+                            <template v-else>
+                                {{ event.price }}
+                            </template>
+                        </div>
+
+                        <div id="left_bottom">
+
+                            <button id="goto_discount" onclick="window.location.href='#input_text'">کد تخفیف</button>
+
+                            <div class="ui animated button" id="pay_tehran" tabindex="0">
+
+                                <div class="visible content" id="v1"><i class="payment icon" id="i4"></i>پرداخت</div>
+
+                                <div class="hidden content">
+                                    <i class="right arrow icon"></i>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="input_text">
+    
+                        <div v-if="discountError" class="ui message error">
+                            {{ discountError }}
+                        </div>
+
+                        <input type="text" v-model="discountCode" name="discount" id="discount" placeholder="کدتخفیف">
+                        <button @click="discountValidation" id="activate_tehran">ثبت</button>
+
+
+
+                    </div> -->
+                    {% endverbatim %}
+
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#main',
+                data: {
+                    events: [
+                    {% for event in events %}
+                        {
+                            location: '{{event.name}}',
+                            price: {{ event.price }},
+                            form_action_url: '{% url 'registeration:purchase' event.pk %}'
+                        },
+                    {% endfor %}
+                    ],
+                    discountPercent: null,
+                    loading: false,
+                    discountCode: null,
+                    discountError: null,
+                },
+                methods: {
+                    discountValidation(){
+                        if(this.discountCode){
+                            this.loading = true;
+                            axios.post('http://academic-events.ir/api/discount_check/1/',{
+                                discount_code: this.discountCode
+                            }).then(function(response) {
+                                console.log(response.data)
+
+                                // if(response.result == 'ok'){
+                                //     this.discountPercent = response.percent;
+                                // } else {
+                                //     this.discountError = response.error;
+                                // }
+                                this.loading = false;
+                            })
+                        }
+                    }
+                }
+            })
+
+
+            $(document).ready(function(){
+                $(".ui.button.goto_discount").click(function(){
+                    $('.ui.modal')
+                    .modal('show');
+                });
+            });
+        </script>
+    </body>
+
+
+
+
+</html>
