@@ -90,7 +90,7 @@ class Invoice(models.Model):
 
     def __str__(self):
         if self.paid:
-            return self.amount + "$"
+            return str(self.amount) + "$"
         if not self.active:
             return "خارج از دور"
         return "در حال پرداخت"
