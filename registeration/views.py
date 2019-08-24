@@ -249,7 +249,7 @@ def purchase_view(request, event_pk):
     for invoice in Invoice.objects.filter(active=1, paid=0, event=event, discount_pk=discount_pk, person=person):
         if datetime.datetime.now(datetime.timezone.utc)- invoice.created_date > datetime.timedelta(minutes=15):
             #come back so soon ? use old link
-            return redirect('https://www.zarinpal.com/pg/StartPay/' + str(invoice.Authority))
+            return redirect('https://www.zarinpal.com/pg/StartPay/' + str(invoice.authority))
         else:
             #else make new and kill old :D
             n_invoice = Invoice(active=1, paid=0, person=invoice.person, amount=invoice.amount, event=invoice.event)
