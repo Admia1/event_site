@@ -36,20 +36,15 @@
 
         </div>
 
-                            <div id="div_img_form">
 
-                                <img id="img_form" src="{% static 'register/photo2.jpg' %}">
+        <div id="image_and_form">
+        <div id="div_img_form">
 
-                            </div>
+            <img id="img_form" src="{% static 'register/photo2.jpg' %}">
 
-                                        <div class="ui horizontal divider" id="h_page">
+        </div>
 
-                                            <span id="content_h_page">
-                                                ثبت نام
-                                            </span>
-
-                                        </div>
-
+        <div id="form_container">
 
             {% if error_message %}
             <div class="ui message error validation-message" style="width: 65%; margin: auto;">
@@ -220,7 +215,7 @@
 
                 <div id="divsubmit">
 
-                    <button id="b1" style="font-style: normal;">ثبت نام</button>
+                    <button id="b1">ثبت نام</button>
 
                 </div>
 
@@ -242,6 +237,8 @@
             </div>
 
         </form>
+    </div>
+    </div>
 
 
 
