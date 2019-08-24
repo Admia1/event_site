@@ -247,7 +247,7 @@ def purchase_view(request, event_pk):
 
     #cheat the cheaters
     for invoice in Invoice.objects.filter(active=1, paid=0, event=event, discount_pk=discount_pk, person=person):
-        if datetime.datetime.now() - invoice.created_date > datetime.timedelta(minutes=15):
+        if datetime.datetime.now(datetime.timezone.utc)- invoice.created_date > datetime.timedelta(minutes=15):
             #come back so soon ? use old link
             return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
         else:
@@ -328,7 +328,7 @@ def error(request):
 
 def invoice_cleaner():
     for invoice in Invoice.objects.filter(active=1, paid=0):
-        if  datetime.datetime.now() - invoice.created_date > datetime.timedelta(hours=1):
+        if  datetime.datetime.now(datetime.timezone.utc) - invoice.created_date > datetime.timedelta(hours=1):
             invoice.active=0
             invoice.save()
 
