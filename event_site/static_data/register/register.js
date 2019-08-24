@@ -112,7 +112,7 @@ $(document).ready(function(){
                 // "border-color":"rgb(9, 119, 55)",
                 "color":"black",
                 });
-            $(this).append("Submit");
+            $(this).append("ثبت نام");
         }
 
     });
