@@ -108,7 +108,7 @@
             <div class="ui piled segment" id="about_event">
 
                 <h2 id="h_about_event">
-                    درباره ی رویداد
+                    <i class="info icon" style="color:rgb(255, 136, 0)"></i>&nbsp&nbspدرباره ی رویداد
                 </h2>
 
                 <div id="div_video">
@@ -118,7 +118,7 @@
                 </div>
 
                 توسعه گردشگری ورودی  به عنوان
-                یکی از پتانسیل های های اصلی هرکشور ی در راه  ایجاد رونق اقتصادی و اشتغال و افزایش سطح درآمد ملی تلقی می شود. حال آن که
+                یکی از پتانسیل های اصلی هرکشور ی در راه  ایجاد رونق اقتصادی و اشتغال و افزایش سطح درآمد ملی تلقی می شود. حال آن که
                 توسعه ی این بخش از صنعت با چالش های متعددی روبه روست. یکی از چالش های موجود ، کم توجهی به امر اموزش و تربیت نیروهای متخصص
                 فعال در صنعت می باشد. در سال های  اخیر کشور چین به عنوان یکی از بازار های بزرگ و بالقوه برای جذب گردشگران ورودی، مورد توجه
                 بسیاری از کشور های اروپایی و آسیایی قرا گرفته است.طبق  آمار و داده های جدید از سازمان جهانی گردشگری ،در سال 2018، کشور چین
@@ -131,29 +131,9 @@
             </div>
 
             <div id="location">
-                <h2 id="h_location">برگزار کننده :</h2>
+                <h2 id="h_location"><i class="check circle icon"></i> &nbsp&nbspبرگزار کننده :</h2>                
 
-                <br>
-                <br>
-                <br>
-
-                <div class="ui card" id="location_content">
-
-                    <div class="image">
-
-                        <img id="location_img" src="{% static 'home/Amazing Cityscapes HD Wallpapers (Downloadha (36).jpg' %}">
-
-                    </div>
-
-                    <div class="content">
-
-                        <div class="description" id="location_description">
-                            مرکز آموزش های آزاد و تخصصی دانشگاه شیراز
-                        </div>
-
-                    </div>
-
-                </div>
+                <img class="ui centered medium image" id="location_img" src="{% static 'home/shiraz_uni.jpg' %}">
 
                 <br>
                 <div class="ui divider"></div>
@@ -216,7 +196,7 @@
             <div class="ui piled segment" id="speecher">
 
                 <h2 id="h_speecher">
-                    سخنران اصلی رویداد :
+                    <i class="user icon"></i>&nbsp&nbsp&nbspسخنران اصلی رویداد :
                 </h2>
 
                 <br>
@@ -224,7 +204,7 @@
                 <img class="ui centered circular image" id="speecher_img" src="{% static 'home/prof.jpg' %}">
                 <br>
 
-                پروفسور <span id="span_speecher1">Dr. Wolfgang Georg Arlt FRGS FRAS</span> &nbsp موسس مجموعه تحقیقاتی <span id="span_speecher2">COTRI</span>  و همچنین استاد گردشگری بسیاری از دانشگاه های مطرح دنیاست. تجربیات کاری و اکادمیک وی از صنعت گردشگری چین به بیش از چهار دهه می رسد.
+                پروفسور <span id="span_speecher1">Dr. Wolfgang Georg Arlt</span> &nbsp موسس مجموعه تحقیقاتی <span id="span_speecher2">COTRI</span>  و همچنین استاد گردشگری بسیاری از دانشگاه های مطرح دنیاست. تجربیات کاری و اکادمیک وی از صنعت گردشگری چین به بیش از چهار دهه می رسد.
                 خلاصه ای از رزومه آکادمیک و حرفه ای :
 
                 <br>
@@ -241,7 +221,7 @@
                     <br>
 
                     <div id="span_i5">
-                        hong kong polytechnic university<i class="angle right icon" id="i6"></i>
+                        Hong Kong polytechnic university<i class="angle right icon" id="i6"></i>
                         <br>
                         Fachhochschule Stralsund<i class="angle right icon" id="i7"></i>
                         <br>
@@ -274,7 +254,7 @@
             <div class="ui piled segment" id="caption">
 
                 <h2 id="h_caption">
-                    سرفصل ها و محتوای رویداد :
+                    <i class="bookmark icon"></i>&nbsp &nbsp&nbspسرفصل ها و محتوای رویداد :                    
                 </h2>
 
                 <br>
@@ -360,34 +340,337 @@
                     <div class="ui divider"></div>
                 </span>
             </div>
+            
             <div class="ui piled segment" id="audience">
 
-                <h2 id="h_audience">
-                    <i class="users icon" id="i26"></i>
+                    <h2 id="h_audience">
+                        <i class="users icon" id="i26"></i>
+                        &nbsp
+                        مخاطبان دوره :
+                    </h2>
+    
+                    <br>
+    
+                    <i class="user icon" id="i26"></i>
                     &nbsp
-                    مخاطبان دوره :
-                </h2>
-                <br>
-                <i class="user icon" id="i26"></i>
-                &nbsp
-                فعالان صنعت گردشگری ایران
-                <br>
-                ( راهنمایان تور، تور اپراتور ها و کارمند
-                های دفاتر خدمات مسافرتی، کارکنان هتل ها و واحد های اقامتی)
-                <br>
+                    فعالان صنعت گردشگری ایران
+                    <br>
+    
+    
+                    <div id="span_tour">
+                        <i class="circle icon"></i>راهنمایان تور
+                        <br>
+    
+                        <i class="circle icon"></i>تور اپراتور ها
+                        <br>
+    
+                        <i class="circle icon"></i>کارمند های دفاتر خدمات مسافرتی
+                        <br>
+    
+                        <i class="circle icon"></i> کارکنان هتل ها و واحد های اقامتی
+                        <br>
+    
+                    </div>
+    
+                    <i class="user icon" id="i27"></i>
+                    &nbsp
+                    دانشجویان گردشگری و هتلداری
+                    <br>
+    
+                    <i class="user icon" id="i28"></i>
+                    &nbsp
+                    علاقه مندان به صنعت گردشگری و مهمان نوازی
+    
+    
+                </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                <div id="location2">
+                    <h2 id="h_location2">برگزار کننده :</h2>
+    
+                    <br>
+                    <br>
+                    <br>
+                    
+                    <!-- <div class="ui card" id="location_content2"> -->
+    
+                        <!-- <div class="image"> -->
+    
+                            <img class="ui centered medium image" id="location_img2" src="{% static 'home/shiraz_uni.jpg' %}">
+    
+                        <!-- </div> -->
+    
+                        <!-- <div class="content">
+    
+                            <div class="description" id="location_description">
+                                مرکز آموزش های آزاد و تخصصی دانشگاه شیراز
+                            </div>
+    
+                        </div> -->
+    
+                    <!-- </div> -->
+    
+                    <br>
+                    <div class="ui divider"></div>
+    
+                    <div id="address2">
+    
+                        : آدرس
+                        <i class="map marker alternate icon" id="i1_2"></i>
+                        <br>
+                        
+                        <div id="address_span2">
+                            شیراز – خیابان قصرالدشت – نبش خیابان قم آباد - جنب دانشکده دندانپزشکی
+                        </div>
+    
+                        <div id="link_location2">
+                            <a href="https://goo.gl/maps/yWc8WYSuiQcKKmMRA" target="blank">
+                                <div class="image">
+                                    <img id="location_shiraz2" src="{% static 'home/location3.jpg' %}">
+                                </div>
+                            </a>
+                        </div>
+    
+                    </div>
+    
+                    <br>
+                    <div class="ui divider"></div>
+    
+                    <div id="phone_number2">
+    
+                        : شماره تلفن مرکز
+                        &nbsp
+                        <i class="phone icon" id="i2_2"></i></i>
+                        <br>
+                        
+                        <div id="phone_span2">
+                            ۳۶۲۹۳۴۱۱ (۰۷۱) <br> ۳۶۲۹۳۸۲۶ (۰۷۱) <br> ۳۶۲۹۳۸۲۵ (۰۷۱) 
+                        </div>
+    
+                    </div>
+    
+                    <br>
+                    <div class="ui divider"></div>
+    
+                    <div id="fax2">
+    
+                        : فاکس
+                        &nbsp
+                        <i class="fax icon" id="i3_2"></i></i>
+                        <br>
+                        
+                        <div id="fax_span2">
+                            ۳۶۲۹۳۲۴۶ (۰۷۱)
+                        </div>
+    
+                    </div>
+    
+    
+                </div>
 
-                <i class="user icon" id="i27"></i>
-                &nbsp
-                دانشجویان گردشگری و هتلداری
-                <br>
-
-                <i class="user icon" id="i28"></i>
-                &nbsp
-                علاقه مندان به صنعت گردشگری و مهمان نوازی
-
-            </div>
         </div>
     </div>
+    
+
+    <div id="bottom">
+
+
+            <div id="hamian_tejari" dir="rtl">
+
+                <h3 class="ui center aligned header">
+                    تیم اجرایی
+                </h3>
+
+                <div id="hamian_tejari_content">
+
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/team1.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <div class="header">دبیر علمی رویداد<br />
+                                    دکتر خسرو مقدسی</div>
+                            <div class="description">
+                                    ● معاون مرکز آموزش های آزاد و تخصصی دانشگاه شیراز
+                                    ● استاد مدعو بخش گردشگری و هتلداری دانشگاه شیراز
+                                    ● عضو هئیت مدیره انجمن صنفی دفاتر خدمات مسافرتی استان فارس
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/team2.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <div class="header">همکار اجرایی رویداد<br />
+                                رامین ذبیح مند</div>
+                            <div class="description">
+                                ● مدرس بین المللی فدراسیون جهانی راهنمایان گردشگری WFTGA
+                                ● عضو هییت مدیره ی جامعه ی راهنمایان گردشگری ایران
+                                ● عضو هئیت مدیره انجمن صنفی راهنمایان گردشگری استان فارس
+                                ● راهنمای گردشگری چینی زبان
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/team3.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <div class="header">دبیر اجرایی رویداد<br />
+                                علیرضا کارگر</div>
+                            <div class="description">
+                                ● کارشناسی مدیریت گردشگری از دانشگاه شیراز
+                                ● راهنمای گردشگری
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/team4.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <div class="header">همکار اجرایی رویداد<br />
+                                احسان احمدی</div>
+                            <div class="description">
+                                ● دانشجوی کارشناسی گردشگری و هتلداری دانشگاه شیراز
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/team5.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <div class="header">همکار اجرایی رویداد<br />
+                                شیرین عبیدی</div>
+                            <div class="description">
+                                ● کارشناس ارشد گردشگری
+                                ● کارشناس گردشگری شورای اسلامی شهر شیراز
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div id="hamian_tejari">
+
+                <h3 class="ui center aligned header">
+                    حامیان اجرایی
+                </h3>
+
+                <div id="hamian_tejari_content">
+
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/hami1.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <div class="header">کمیسون محترم گردشگری و زیارت شورای اسلامی شهر شیراز</div>
+                            <div class="description">کمیسیون گردشگری و زیارت شورای اسلامی شهر شیراز با توجه به رسالت و مأموریت خود، با سایر نهادهای متولی امر گردشگری همکاری می­ نماید. یکی از مهم­ترین وظایف این کمیسیون تهیه و تنظیم پیشنهادات و برنامه های مرتبط با حوزه گردشگری و زیارت با همکاری تشکل­ ها و نهادهای دولتی مرتبط با گردشگری است. این مهم در راستای ارتقا جایگاه شهر شیراز در حوزه گردشگری ملی، منطقه­ ای و بین­ المللی صورت می­ پذیرد.
+                                    
+                                    این کمیسیون یکی از حامیان اصلی اجرایی رویداد گردشگری ورودی چین می باشد</div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div id="hamian_rahbordi">
+
+                <h3 class="ui center aligned header">
+                    حامیان مالی
+                </h3>
+
+                <div id="hamian_rahbordi_content">
+
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/hami2.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <!-- <div class="header"></div> -->
+                            <div class="description">دفتر خدمات مسافرتی ساناز سیر ایرانیان</div>
+                        </div>
+                    </div>
+
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/hami3.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <!-- <div class="header"></div> -->
+                            <div class="description">هتل جاده ابریشم</div>
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+
+            <div id="hamian_manavi">
+
+                <h3 class="ui center aligned header">
+                    حامیان معنوی
+                </h3>
+
+                <div id="hamian_manavi_content">
+
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/hami4.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <!-- <div class="header"></div> -->
+                            <div class="description">سازمان محترم میراث فرهنگی،صنایع دستی و گردشگری استان فارس</div>
+                        </div>
+                    </div>
+
+                    <div class="ui raised centered link card">
+                        <div class="ui centered image">
+                            <img class="logo_img_sponser" src="{% static 'home/hami5.jpg' %}">
+                        </div>
+                        <div class="content">
+                            <!-- <div class="header"></div> -->
+                            <div class="description">موسسه گردشگری نام آوران دریچه شرق</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+    
         <script src="{% static 'home/home.js' %}"></script>
     </body>
 </html>
