@@ -267,7 +267,7 @@ html
     height:auto;
     float:right;
     box-shadow:  0 0 15px 0 rgba(0, 0, 0, 0.1);
-    padding:20px 25px 20px 20px;
+    padding:20px 20px 20px 20px;
     margin:0px 10px 0px 10px;
 }
 
@@ -278,6 +278,18 @@ html
     direction:rtl;
     font-size:30px;
     text-align:right;
+}
+
+#about_event_content
+{
+    padding:20px 25px 20px 25px;
+    text-align:justify;
+}
+
+#h_about_event .icon.info,
+.ui.right.sidebar.inverted.vertical.menu .item .info.icon
+{
+    color:rgb(255, 136, 0)
 }
 
 #div_video
@@ -327,6 +339,19 @@ html
     direction:rtl;
     font-size:30px;
     text-align:right; 
+}
+
+#h_location .check.circle.icon,
+#h_location2 .check.circle.icon,
+.ui.right.sidebar.inverted.vertical.menu .item .check.circle.icon
+{
+    color:green;
+}
+
+#h_location .check.circle.icon,
+#h_location2 .check.circle.icon
+{
+    font-size:26px;
 }
 
 #location_img, #location_img2
@@ -424,22 +449,36 @@ html
     height:auto;
     float:right;
     box-shadow:  0 0 15px 0 rgba(0, 0, 0, 0.1);
-    padding:20px 25px 20px 20px;
+    padding:20px 20px 20px 20px;
     margin:55px 10px 0px 10px; 
 }
 
 #speecher_img
 {
     height:250px;
+    margin-bottom:60px;
     border:2px solid rgb(195, 206, 216);
 }
 
 #h_speecher
 {
     font-family:Yekan;
+    margin-bottom:60px;
     direction:rtl;
     font-size:30px;
     text-align:right;
+}
+
+#speecher_content
+{
+    padding:20px 25px 20px 25px;
+    text-align:justify;
+}
+
+#h_speecher .user.icon,
+.ui.right.sidebar.inverted.vertical.menu .item .user.icon
+{
+    color:rgb(63, 102, 124);
 }
 
 #speecher_list
@@ -503,16 +542,34 @@ html
     height:auto;
     float:right;
     direction:rtl;
-    padding:20px 25px 20px 20px;
+    padding:20px 20px 20px 20px;
     margin:55px 10px 0px 10px; 
 }
 
 #h_caption
 {
     font-family:Yekan;
+    margin-bottom:60px;
     direction:rtl;
     font-size:30px;
     text-align:right;
+}
+
+#caption_content
+{
+    padding:20px 25px 20px 25px;
+    text-align:justify;
+}
+
+#h_caption .bookmark.icon,
+.ui.right.sidebar.inverted.vertical.menu .item .bookmark.icon
+{
+    color:rgb(43, 192, 130);
+}
+
+.ui.right.sidebar.inverted.vertical.menu .item .pencil.alternate.icon
+{
+    color:rgb(221, 40, 27);
 }
 
 #time1, #time2
@@ -543,19 +600,27 @@ html
     float:right;
     direction:rtl;
     box-shadow:  0 0 15px 0 rgba(0, 0, 0, 0.1);
-    padding:20px 25px 20px 20px;
+    padding:20px 20px 20px 20px;
     margin:55px 10px 0px 10px; 
 }
 
 #h_audience
 {
     font-family:Yekan;
+    margin-bottom:40px;
     direction:rtl;
     font-size:30px;
     text-align:right;
 }
 
-#i26, #i27, #i28
+#audience_content
+{
+    padding:20px 25px 20px 25px;
+    text-align:justify;
+}
+
+#i26, #i27, #i28,
+.ui.right.sidebar.inverted.vertical.menu .item .users.icon
 {
     color:rgb(0, 77, 128);
 }
