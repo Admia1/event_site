@@ -190,7 +190,9 @@ def user_page_view(request):
     return render(request,template,{'event_groups' : event_groups, 'tickets' : tickets})
 
 def home_view(request):
-    Visitor.objects.create(ip=get_client_ip(request))
+    ip=get_client_ip(request)
+    if(ip != '127.0.0.1'):
+        Visitor.objects.create(ip=get_client_ip(request))
     template = 'registeration/home.html'
     return render(request,template)
 
