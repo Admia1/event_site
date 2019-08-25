@@ -41,10 +41,12 @@
                     <div class="ui text loader"> <span id="load">... در حال بارگذاری</span> </div>
                 </div>
                 <div id="modal_header">کد تخفیف خود را وارد کنید</div>
-
+                <div v-if="discountError" class="ui message error" style="width: 300px; margin: auto; text-align: center">
+                  کد تخفیف نامعتبر است
+                </div>
                 <div id="modal_content">
 
-                        <input type="text" v-model="discountCode" name="discount" id="discount" placeholder="کدتخفیف">
+                        <input @keypress.enter="discountValidation" type="text" v-model="discountCode" name="discount" id="discount" placeholder="کدتخفیف">
                         <button @click="discountValidation" id="activate_discount">ثبت</button>
                     
                 </div>
@@ -136,12 +138,12 @@
                     <form class="ui card event_card" :action="event.form_action_url" method="post" v-for="event in events">
 
                     {% csrf_token %}
-                          <input type="hidden" v-model="discountCode" />
+                          <input type="hidden" :value="discountPercent ? discountCode : ''" />
                     {% verbatim %}
                         <div class="content content_header">
 
                             <h3 class="ui center aligned header title_city">
-                                {{ event.location }}
+                                {{ event.name }}
                             </h3>
 
                         </div>
@@ -152,8 +154,8 @@
                           <div class="ui small feed">
                             <div class="event">
                               <div class="content">
-                                <div class="summary">
-                                   <a>Elliot Fu</a> added <a>Jenny Hess</a> to the project
+                                <div v-html="insertBreaks(event.detail)" class="summary" style="line-height: 25px; font-family: Yekan; font-size: 16px; text-align: right;">
+
                                 </div>
                               </div>
                             </div>
@@ -161,7 +163,17 @@
                         </div>
 
                         <div class="extra content">
-
+                            <div style="font-family: Yekan; font-weight: 700; text-align: center; font-size: 18px; padding: 20px; color: #444444;">
+                                <template v-if="discountPercent">
+                                  قیمت: <span style="text-decoration: line-through; color: #aaaaaa">{{ event.price | toPersinaNumber }}</span> {{ event.price - event.price / 100 * discountPercent }} تومان
+                                </template>
+                                <template v-else>
+                                  قیمت: {{ event.price | toPersinaNumber }} تومان
+                                </template>
+                            </div>
+                            <div v-if="discountPercent" dir="rtl" style="font-family: Yekan; font-weight: 700; text-align: center; font-size: 18px; padding-bottom: 20px; color: #444444;">
+                              کد تخفیف: {{ discountCode }}
+                            </div>
                             <button class="ui animated button pay_event" tabindex="0">
 
                                 <div class="visible content v1"><i class="payment icon i4"></i>پرداخت</div>
@@ -205,7 +217,7 @@
                     <!-- <div class="left_content" v-for="event in events">
 
                         <h3 class="ui center aligned block header" id="title_city1">
-                            {{ event.location }}
+                            {{ event.name }}
                         </h3>
 
                         <div id="main_left_content">
@@ -262,7 +274,8 @@
                     events: [
                     {% for event in events %}
                         {
-                            location: '{{event.name}}',
+                            name: '{{event.name}}',
+                            detail: `{{event.detail}}`,
                             price: {{ event.price }},
                             form_action_url: '{% url 'registeration:purchase' event.pk %}'
                         },
@@ -273,21 +286,46 @@
                     discountCode: null,
                     discountError: null,
                 },
+                filters: {
+                  toPersinaNumber: function(value) {
+                    return String(value).replace(/0/g, '۰')
+                                    .replace(/1/g, '۱')
+                                    .replace(/2/g, '۲')
+                                    .replace(/3/g, '۳')
+                                    .replace(/4/g, '۴')
+                                    .replace(/5/g, '۵')
+                                    .replace(/6/g, '۶')
+                                    .replace(/7/g, '۷')
+                                    .replace(/8/g, '۸')
+                                    .replace(/9/g, '۹')
+                  }
+                },
                 methods: {
+                    insertBreaks: function(value) {
+                        if (!value) return ''
+                        return value.replace(/\n/g, ' <br/> ')
+                    },
                     discountValidation(){
+                        const vinst = this;
                         if(this.discountCode){
                             this.loading = true;
-                            axios.post('http://academic-events.ir/api/discount_check/1/',{
-                                discount_code: this.discountCode
+                            axios.post('http://127.0.0.1:8000/api/discount_check/1/',{
+                              discount_code: vinst.discountCode
+                            },{
+                                headers: {
+                                  'Content-Type': 'application/json'
+                                }
                             }).then(function(response) {
                                 console.log(response.data)
 
-                                // if(response.result == 'ok'){
-                                //     this.discountPercent = response.percent;
-                                // } else {
-                                //     this.discountError = response.error;
-                                // }
-                                this.loading = false;
+                                if(response.data.result == 'ok'){
+                                    vinst.discountPercent = response.data.percent;
+                                    $('.ui.modal')
+                                    .modal('hide');
+                                } else {
+                                    vinst.discountError = response.data.error_message;
+                                }
+                                vinst.loading = false;
                             })
                         }
                     }

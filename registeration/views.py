@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import datetime
 from zeep import Client
-
+import json
 
 from django.contrib.auth.models import User
 
@@ -354,8 +354,8 @@ def discount_check_api(request, event_group_pk):
 
     if request.method != "POST":
         return JsonResponse({"status" : "error", "error_message" : "it should be post"})
-
-    if 'discount_code' not in request.POST:
+    data = json.loads(request.body)
+    if 'discount_code' not in data:
         return JsonResponse({"status" : "error", "error_message" : "bad json format"})
 
     try:
@@ -364,7 +364,7 @@ def discount_check_api(request, event_group_pk):
         return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "همچین رویدادی وجود ندارد"})
 
     try:
-        discount = Discount.objects.get(code=request.POST['discount_code'], event_group=event_group)
+        discount = Discount.objects.get(code=data['discount_code'], event_group=event_group)
     except:
         return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "این کد تخفیف برای این رویداد نامعتبر است"})
 
