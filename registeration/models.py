@@ -107,3 +107,7 @@ class Discount(models.Model):
 
     def __str__(self):
         return str(self.percent) + "% " + self.detail
+
+class Visitor(models.Model):
+    ip = models.CharField(max_length=20)
+    visit_time = models.DateTimeField(auto_now=True)

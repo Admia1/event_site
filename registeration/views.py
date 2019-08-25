@@ -11,9 +11,17 @@ import json
 from django.contrib.auth.models import User
 
 from django.contrib.staticfiles.templatetags.staticfiles import static
-from .models import Person, Invoice, Event, Discount, EventGroup
+from .models import Person, Invoice, Event, Discount, EventGroup, Visitor
 
 from . import secret
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 def farsi_to_english_digit(number_string):
     dic = {
@@ -182,6 +190,7 @@ def user_page_view(request):
     return render(request,template,{'event_groups' : event_groups, 'tickets' : tickets})
 
 def home_view(request):
+    Visitor.objects.create(ip=get_client_ip(request))
     template = 'registeration/home.html'
     return render(request,template)
 
@@ -350,8 +359,10 @@ def event_group_view(request, event_group_pk):
     events = Event.objects.filter(event_group=event_group)
 
     for event in events:
-        if Invoice.objects.filter(event=event, person=Person.objects.get(user=request.user), paid=1).exists():
-            
+        invoice_qs = Invoice.objects.filter(event=event, person=Person.objects.get(user=request.user), paid=1)
+        if invoice_qs.exists():
+            invoice = invoice_qs.first()
+
             ticket_data = {
                 'event': event
             }
@@ -367,7 +378,8 @@ def event_group_view(request, event_group_pk):
                 logos = []
 
             ticket_data['logos'] = logos
-
+            ticket_data['refid'] = invoice.refid
+            
             return render(request, 'registeration/event_group_paid.html', {
                 'ticket_data': ticket_data,
                 'payment_success' : request.GET.get('payment_success', '')
