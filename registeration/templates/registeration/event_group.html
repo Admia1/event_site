@@ -309,7 +309,7 @@
                         const vinst = this;
                         if(this.discountCode){
                             this.loading = true;
-                            axios.post('http://127.0.0.1:8000/api/discount_check/1/',{
+                            axios.post('{{ discount_check_url }}',{
                               discount_code: vinst.discountCode
                             },{
                                 headers: {

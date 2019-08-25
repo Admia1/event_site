@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import datetime
+from furl import furl
 from zeep import Client
 import json
 
@@ -303,8 +304,8 @@ def send_to_zarin(request, invoice):
     description = "جهت خرید بلیط "  + invoice.event.name               # Required
     email  = invoice.person.email                         # Optional
     mobile = invoice.person.phone_number                  # Optional
-    CallbackURL = 'http://academic-events.ir/verify/' # Important: need to edit for realy server.
-
+    CallbackURL = furl(request.build_absolute_uri(reverse("registeration:verify")))
+    
     amount = invoice.amount
 
     result = client.service.PaymentRequest(MERCHANT, amount, description, email, mobile, CallbackURL)
@@ -341,7 +342,7 @@ def event_group_view(request, event_group_pk):
     except:
         return error(request)
     events = Event.objects.filter(event_group=event_group)
-    return render(request, template, {'events' : events})
+    return render(request, template, {'events' : events, 'discount_check_url': furl(request.build_absolute_uri(reverse("registeration:discount_check", kwargs={'event_group_pk': event_group_pk})))})
 
 
 @csrf_exempt
