@@ -1,15 +1,138 @@
-<head>
-  <title>Login page</title>
-</head>
-<body>
-<p>Login page</p>
-{% if error_message%}
-<p style="color:red">{{ error_message }}</p>
-{% endif %}
-<form action="{% url 'registeration:login' %}" method="post">
-{% csrf_token %}
-<p>username</p><input type="text" name="username" value="">
-<p>password</p><input type="password" name="password" value="">
-<input type="submit" value="submit">
-</form>
-</body>
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+
+
+    <head>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>رویداد های آکادمیک</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" media="screen" href="{% static 'register/register.css' %}"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
+    </head>
+
+
+
+
+    <body id="body">
+
+
+        <div id="fixed_menu">
+
+            <a id="sign_fm" href="{% url 'registeration:login' %}">
+                ورود
+            </a>
+
+            <a id="exit_fm" href="{% url 'registeration:logout' %}">
+                خروج
+            </a>
+
+            <img id="logo_fm" src="{% static 'register/photo1.jpg' %}">
+
+        </div>
+
+
+        <div id="image_and_form">
+
+        <div id="form_container" style="border-radius: 30px;">
+
+            {% if error_message %}
+            <div class="ui message error validation-message" style="width: 65%; margin: auto;">
+                <ul>
+                  <li>
+                    {{ error_message }}
+                  </li>
+                </ul>
+            </div>
+            {% endif %}
+        <form id="main_form" style="border-radius: 20px;" class="ui form" action="{% url 'registeration:login' %}" method="post">
+          {% csrf_token %}
+
+            <div id="content_form" style="border-radius: 30px;">
+
+
+                <div class="ui message error validation-message" id="validation-message">
+
+                </div>
+
+
+                <!-- <div class="three fields"> -->
+
+                    <div class="two fields" id="name_two_fields">
+
+                        <div class="field" id="a1">
+
+                            <input type="text" id="first_name" name="password" placeholder="کد ملی">
+                            <span id="span1"> <i class="user icon"></i> </span>
+
+                        </div>
+
+                        <div class="field" id="a2">
+
+                            <input type="text" id="last_name" name="username" placeholder="ایمیل">
+                            <span id="span2"> <i class="user icon"></i> </span>
+
+                        </div>
+
+                    </div>
+
+                <div id="divsubmit">
+
+                    <button id="b1">ورود</button>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+        </form>
+    </div>
+    </div>
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        <script src="{% static 'register/register.js' %}"></script>
+
+    <script>
+ $(document).ready(function(){
+
+    $('.dropdown')
+        .dropdown({
+            // you can use any ui transition
+        transition: 'drop'
+    });
+
+
+
+
+ });
+    </script>
+
+
+    </body>
+
+
+
+</html>
+
