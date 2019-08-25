@@ -742,6 +742,18 @@ html
     object-fit:contain !important;
 }
 
+#team_ejraei_content .description .circle.icon
+{
+    color:rgb(68, 141, 170) !important;
+    font-size:9px;
+    float:right !important;
+    margin-right:0px !important;
+    margin-left:3px !important;
+    position:relative;
+    top:2px;
+    left:5px;
+}
+
 
 
 
