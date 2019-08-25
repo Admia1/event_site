@@ -215,10 +215,9 @@ def verify_view(request):
             invoice.paid = 1
             invoice.save()
 
-            for o_invoice in Invoice.objects.filter(person=invoice.person, event=invoice.event, active=1):
-                if o_invoice.pk != invoice.pk:
-                    o_invoice.active=0
-                    o_invoice.save()
+            for o_invoice in Invoice.objects.filter(person=invoice.person, event=invoice.event, active=1, paid=0):
+                o_invoice.active=0
+                o_invoice.save()
             return HttpResponseRedirect("%s?payment_success=true" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
             
         else:
