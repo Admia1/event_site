@@ -216,6 +216,28 @@
 
                 </div>
 
+                <div class="inline field" style="text-align: center;background-color: #f4f4f4; width: 400px; margin: auto; border-radius: 5px;">
+                    <label for="rules">
+                        با <a id="show-rules" href="#rules">شرایط و قوانین</a> سایت موافقم
+                    </label>
+                    <input type="checkbox" required name="rules" id="rules"/> 
+                </div>
+
+                <div class="ui small modal">
+
+                        <div class="header" style="text-align: center;">شرایط و قوانین</div>
+                        <div class="content" style="text-align: right; font-family: Yekan; font-size: 16px;">
+                                ۱_ به تمامی شرکت کنندگان در این رویداد که از طریق همین سامانه ثبت نام خود را انجام داده باشند؛  یک گواهی نامه معتبر  دو سویه از طرف دانشگاه شیراز و موسسه تحقیقاتی COTRI آلمان اهدا خواهد شد.
+                                این گواهی نامه ظرف دو هفته پس از تاریخ اتمام دوره ؛از محل مرکز اموزش های آزاد و تخصصی و پردیس بین الملل دانشگاه شیراز قابل دریافت خواهد بود.
+                                <br/><br/>
+                                ۲_ ساعت شروع رویداد ۹ صبح مورخ دوشنبه ۲۵ شهریور ماه خواهد بود خواهد خواهشمند است در زمان مناسب در محل  رویداد حضور داشته باشید
+                                <br/><br/>
+                                ۳-  سخنرانی پروفسور آرلت در طول رویداد به زبان انگلیسی انجام خواهد شد. 
+                                لازم به ذکر است مترجم فارسی زبان، صرفا جهت جمع بندی وترجمه برخی از مطالب سخنران اصلی و همچنین به جهت تسهیل در امر پرسش و پاسخ بین مخاطبین و استاد دوره، در محل حضور خواهد داشت.
+                        </div>
+                            
+                    </div>
+
                 <div id="divsubmit">
 
                     <button id="b1">ثبت نام</button>
@@ -260,6 +282,15 @@
 
 
 
+                $("#show-rules").click(function(){
+                    $('.ui.modal')
+                    .modal('show');
+                });
+
+                $(".ui.modal").click(function(){
+                    $('.ui.modal')
+                    .modal('hide');
+                });
 
  });
     </script>
