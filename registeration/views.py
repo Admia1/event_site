@@ -243,11 +243,12 @@ def purchase_view(request, event_pk):
             discount = Discount.objects.get(event_group=event.event_group, code=request.POST['discount_code'])#debug event
             discount_pk = discount.pk
         except:
-            return render(request, template, {'error_message' : 'این کد تخفیف نامعتبر است'})
+            return HttpResponseRedirect("%s?payment_error=این کد تخفیف نامعتبر است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
+
     else:
         discount_pk = 0
     if Invoice.objects.filter(event=event, person=person, paid=1).exists():
-        return render(request, template, {'error_message':'شما قبلا بلیط این رویداد را خریداری کرده اید'})
+        return HttpResponseRedirect("%s?payment_error=شما قبلا بلیط این رویداد را خریداری کرده اید" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
     
     #cheat the cheaters
     for invoice in Invoice.objects.filter(active=1, paid=0, amount=event.price, event=event, discount_pk=discount_pk, person=person):
@@ -265,7 +266,7 @@ def purchase_view(request, event_pk):
     if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
         invoice_cleaner()# :/
         if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
-            return render(request, template, {'error_message':'ظرفیت این رویداد به اتمام رسیده است'})
+            return HttpResponseRedirect("%s?payment_error=ظرفیت این رویداد به اتمام رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
 
 
     amount  = event.price
@@ -274,7 +275,8 @@ def purchase_view(request, event_pk):
     if Invoice.objects.filter(event=event, active=1).count() > event.capacity:
         invoice.active=0
         invoice.save()
-        return render(request, template, {'error_message':'ظرفیت این رویداد به پایان رسیده است'})
+        return HttpResponseRedirect("%s?payment_error=ظرفیت این رویداد به اتمام رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
+        
     #cant turn off other invoices of this person :(
     #change amount for off here
 
@@ -282,7 +284,7 @@ def purchase_view(request, event_pk):
         if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() >= discount.capacity:
             invoice.active=0
             invoice.save()
-            return render(request, template, {'error_message' : 'دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است'})
+            return HttpResponseRedirect("%s?payment_error=دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
 
         invoice.discount_pk = discount.pk
 
@@ -293,7 +295,7 @@ def purchase_view(request, event_pk):
         if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() > discount.capacity:
             invoice.active=0
             invoice.save()
-            return render(request, template, {'error_message' : 'دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است'})
+            return HttpResponseRedirect("%s?payment_error=دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
 
     return send_to_zarin(request, invoice)
 
