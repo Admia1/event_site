@@ -453,7 +453,7 @@ html
 
 #speecher_img
 {
-    height:250px;
+    height:200px;
     margin-bottom:60px;
     border:2px solid rgb(195, 206, 216);
 }
@@ -660,10 +660,11 @@ html
     height:auto;
     margin:0 auto 0;
     background-color:rgb(231, 231, 231);
-    position:relative;
+    /* position:relative; */
 }
 
-#hamian_tejari, #hamian_rahbordi, #hamian_manavi
+#hamian_tejari, #hamian_rahbordi, #hamian_manavi,
+#team_ejraei
 {
     height:auto;
     width:100%;
@@ -672,6 +673,7 @@ html
     border-bottom:1px solid rgb(224, 224, 224);
 }
 
+#team_ejraei .ui.center.aligned.header,
 #hamian_tejari .ui.center.aligned.header,
 #hamian_rahbordi .ui.center.aligned.header,
 #hamian_manavi .ui.center.aligned.header
@@ -684,22 +686,37 @@ html
     margin-bottom:40px !important;
 }
 
-#hamian_tejari_content, #hamian_rahbordi_content,
-#hamian_manavi_content
+#hamian_tejari_content, #team_ejraei_content,
+#hamian_rahbordi_content, #hamian_manavi_content
 {
     display:flex;
     flex-wrap:wrap;
     margin:20px;
 }
 
+#team_ejraei_content .ui.raised.centered.link.card,
+#hamian_tejari_content .ui.raised.centered.link.card,
+#hamian_rahbordi_content .ui.raised.centered.link.card,
+#hamian_manavi_content .ui.raised.centered.link.card
+{
+    /* height:400px !important;
+    width:250px !important; */
+    float:right !important;
+    margin:40px auto 0 !important;
+}
+
+#team_ejraei_content .ui.centered.image,
 #hamian_tejari_content .ui.centered.image,
 #hamian_rahbordi_content .ui.centered.image,
 #hamian_manavi_content .ui.centered.image
 {
     padding:20px !important;
     background-color:white !important;
+
+    /* height:300px !important; */
 }
 
+#team_ejraei_content .ui.raised.centered.link.card .content .header,
 #hamian_tejari_content .ui.raised.centered.link.card .content .header,
 #hamian_rahbordi_content .ui.raised.centered.link.card .content .header,
 #hamian_manavi_content .ui.raised.centered.link.card .content .header
@@ -708,17 +725,19 @@ html
     text-align:center;
 }
 
+#team_ejraei_content .ui.raised.centered.link.card .content .description,
 #hamian_tejari_content .ui.raised.centered.link.card .content .description,
 #hamian_rahbordi_content .ui.raised.centered.link.card .content .description,
 #hamian_manavi_content .ui.raised.centered.link.card .content .description
 {
     font-family:Yekan !important;
-    text-align:center;
+    text-align:justify;
+    direction:rtl !important;
 }
 
 .logo_img_sponser
 {
-    background-color:white;
+    background-color:white!important;
     height:150px !important;
     object-fit:contain !important;
 }
@@ -855,6 +874,6 @@ html
 {
     #bottom
     {
-        width:102%;
+        width:101%;
     } 
 }
