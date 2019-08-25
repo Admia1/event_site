@@ -96,7 +96,7 @@ def register_post_validator(post):
 def register_view(request):
     template = 'registeration/register.html'
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('registeration:user_page'))
+        return HttpResponseRedirect(reverse('registeration:event_group', kwargs={'event_group_pk':1}))
     else:
         if request.method == 'POST':
             #validation of data
@@ -207,12 +207,15 @@ def verify_view(request):
                 if o_invoice.pk != invoice.pk:
                     o_invoice.active=0
                     o_invoice.save()
+            return HttpResponseRedirect("%s?payment_success=true" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
+            
         else:
             #failed to pay
             invoice.active = 0
             invoice.save()
+            return HttpResponseRedirect("%s?payment_error=پرداخت ناموفق" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
 
-    return HttpResponseRedirect(reverse('registeration:user_page'))
+    return HttpResponseRedirect("%s?payment_error=پرداخت ناموفق" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
 
 
 def purchase_view(request, event_pk):
@@ -229,12 +232,12 @@ def purchase_view(request, event_pk):
         event  = Event.objects.get(pk = event_pk)
     except:
         return render(request, template, {'error_message': 'همچین رویدادی وجود ندارد'})
-
+    
     if request.method != 'POST':
         return error(request)
     if 'discount_code' not in request.POST:
         return error(request)
-
+    
     if request.POST['discount_code']:
         try:
             discount = Discount.objects.get(event_group=event.event_group, code=request.POST['discount_code'])#debug event
@@ -245,7 +248,7 @@ def purchase_view(request, event_pk):
         discount_pk = 0
     if Invoice.objects.filter(event=event, person=person, paid=1).exists():
         return render(request, template, {'error_message':'شما قبلا بلیط این رویداد را خریداری کرده اید'})
-
+    
     #cheat the cheaters
     for invoice in Invoice.objects.filter(active=1, paid=0, event=event, discount_pk=discount_pk, person=person):
         if datetime.datetime.now(datetime.timezone.utc)- invoice.created_date > datetime.timedelta(minutes=15):
@@ -342,7 +345,12 @@ def event_group_view(request, event_group_pk):
     except:
         return error(request)
     events = Event.objects.filter(event_group=event_group)
-    return render(request, template, {'events' : events, 'discount_check_url': furl(request.build_absolute_uri(reverse("registeration:discount_check", kwargs={'event_group_pk': event_group_pk})))})
+    return render(request, template, {
+        'events' : events,
+        'discount_check_url': furl(request.build_absolute_uri(reverse("registeration:discount_check", kwargs={'event_group_pk': event_group_pk}))),
+        'payment_error' : request.GET.get('payment_error', ''),
+        'payment_success' : request.GET.get('payment_success', '')
+    })
 
 
 @csrf_exempt

@@ -86,7 +86,6 @@
             </div>
 
             <div id="content">
-
                 <div id="three_steps">
 
 
@@ -132,13 +131,22 @@
 
 
                 </div>
-
+                {% if payment_error %}
+                <div class="ui message error" style="width: 60%; text-align: right; margin: 10px auto;">
+                    {{ payment_error }}
+                </div>
+                {% endif %}
+                {% if payment_success %}
+                <div class="ui message" style="width: 60%; text-align: right; margin: 10px auto;">
+                    با موفقیت پرداخت شد
+                </div>
+                {% endif %}
                 <div id="main_content">
 
                     <form class="ui card event_card" :action="event.form_action_url" method="post" v-for="event in events">
 
                     {% csrf_token %}
-                          <input type="hidden" :value="discountPercent ? discountCode : ''" />
+                          <input type="hidden" name="discount_code" :value="discountPercent ? discountCode : ''" />
                     {% verbatim %}
                         <div class="content content_header">
 
