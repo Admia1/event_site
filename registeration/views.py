@@ -223,8 +223,6 @@ def verify_view(request):
             
         else:
             #failed to pay
-            invoice.active = 0
-            invoice.save()
             return HttpResponseRedirect("%s?payment_error=پرداخت ناموفق" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
 
     return HttpResponseRedirect("%s?payment_error=پرداخت ناموفق" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
