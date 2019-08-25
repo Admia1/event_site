@@ -269,7 +269,7 @@ def purchase_view(request, event_pk):
             return redirect('https://www.zarinpal.com/pg/StartPay/' + str(invoice.authority))
         else:
             #else make new and kill old :D
-            n_invoice = Invoice(active=1, paid=0, person=invoice.person, amount=invoice.amount, event=invoice.event)
+            n_invoice = Invoice(active=1, paid=0, person=invoice.person, amount=invoice.amount, event=invoice.event, discount_pk=discount_pk)
             invoice.active=0
             n_invoice.save()
             invoice.save()
@@ -380,6 +380,7 @@ def event_group_view(request, event_group_pk):
                 logos = []
 
             ticket_data['logos'] = logos
+            ticket_data['logos_count'] = len(logos)
             ticket_data['refid'] = invoice.refid
             
             return render(request, 'registeration/event_group_paid.html', {

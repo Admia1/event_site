@@ -99,9 +99,16 @@
                 {% endif %}
                 
                 <div id="topdf">
-                    {% for logo in ticket_data.logos %}
-                        <img style="width: 100px;" src="{{ logo }}">
-                    {% endfor %}
+                    <table>
+                        <td style="width: 1000px;">
+                            {% for logo in ticket_data.logos %}
+                                <img style="width: 300px;" src="{{ logo }}">
+                            {% endfor %}
+                        </td>
+                        <td>
+                            خهتصشبثهختبصثشهخ
+                        </td>
+                    </table>
                 </div>
 
                 <button id="getpdf" class="ui primary button">
@@ -109,27 +116,10 @@
                 </button>
             </div>
         </div>
-        <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+        <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
         <script>
-            var doc = new jsPDF();          
-            var elementHandler = {
-                // '#ignorePDF': function (element, renderer) {
-                //     return true;
-                // }
-            };
             var source = window.document.getElementById("topdf");
-            doc.fromHTML(
-                source,
-                15,
-                15,
-                {
-                'width': 180,'elementHandlers': elementHandler
-                });
-            $(document).ready(function(){
-                $('#getpdf').click(function(){
-                    doc.output("dataurlnewwindow");
-                })
-            })
+            html2pdf(source);
         </script>
 
     </body>
