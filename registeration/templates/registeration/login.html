@@ -24,15 +24,18 @@
 
         <div id="fixed_menu">
 
-            <a id="sign_fm" href="{% url 'registeration:login' %}">
+            <a id="exit_fm" href="{% url 'registeration:home' %}">
+                صفحه اصلی
+            </a>
+            <a id="sign_fm" href="#">
                 ورود
             </a>
 
-            <a id="exit_fm" href="{% url 'registeration:logout' %}">
-                خروج
-            </a>
 
-            <img id="logo_fm" src="{% static 'register/photo1.jpg' %}">
+            
+            <a href="{% url 'registeration:home' %}">
+                <img id="logo_fm" src="{% static 'register/photo1.jpg' %}">
+            </a>
 
         </div>
 
@@ -41,24 +44,20 @@
 
         <div id="form_container" style="border-radius: 30px;">
 
-            {% if error_message %}
-            <div class="ui message error validation-message" style="width: 65%; margin: auto;">
-                <ul>
-                  <li>
-                    {{ error_message }}
-                  </li>
-                </ul>
-            </div>
-            {% endif %}
         <form id="main_form" style="border-radius: 20px;" class="ui form" action="{% url 'registeration:login' %}" method="post">
           {% csrf_token %}
 
             <div id="content_form" style="border-radius: 30px;">
 
-
-                <div class="ui message error validation-message" id="validation-message">
-
-                </div>
+                    {% if error_message %}
+                    <div class="ui message error validation-message" style="display: block; border-radius: 20px; width: 65%; margin: 0px auto 15px auto;">
+                        <ul>
+                            <li>
+                            {{ error_message }}
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
 
 
                 <!-- <div class="three fields"> -->
@@ -113,22 +112,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
         <!-- <script src="{% static 'register/register.js' %}"></script> -->
-
-    <script>
- $(document).ready(function(){
-
-    $('.dropdown')
-        .dropdown({
-            // you can use any ui transition
-        transition: 'drop'
-    });
-
-
-
-
- });
-    </script>
-
 
     </body>
 

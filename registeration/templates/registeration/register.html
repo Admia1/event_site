@@ -24,15 +24,18 @@
 
         <div id="fixed_menu">
 
-            <a id="sign_fm" href="{% url 'registeration:login' %}">
-                ورود
+            <a id="exit_fm" href="{% url 'registeration:home' %}">
+                صفحه اصلی
             </a>
 
-            <a id="exit_fm" href="{% url 'registeration:logout' %}">
-                خروج
+            <a id="sign_fm" href="#">
+                ثبت نام
             </a>
 
-            <img id="logo_fm" src="{% static 'register/photo1.jpg' %}">
+            
+            <a href="{% url 'registeration:home' %}">
+                <img id="logo_fm" src="{% static 'register/photo1.jpg' %}">
+            </a>
 
         </div>
 
