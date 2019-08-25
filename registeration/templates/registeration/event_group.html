@@ -160,12 +160,18 @@
 
                         <div class="content event_content">
                             
-                          <h4 class="ui sub header">اطلاعات رویداد</h4>
+                          <h4 class="ui header">اطلاعات رویداد</h4>
                           <div class="ui small feed">
                             <div class="event">
                               <div class="content">
-                                <div v-html="insertBreaks(event.detail)" class="summary" style="line-height: 25px; font-family: Yekan; font-size: 16px; text-align: right;">
-
+                                <div class="summary" style="line-height: 25px; font-family: Yekan; font-size: 16px; font-weight: normal; text-align: right;">
+                                    آدرس: {{ event.address }}
+                                    <br />
+                                    <br />
+                                    تاریخ: {{ event.date }}
+                                    <br />
+                                    <br />
+                                    زمان: {{ event.time }}
                                 </div>
                               </div>
                             </div>
@@ -286,6 +292,9 @@
                         {
                             name: '{{event.name}}',
                             detail: `{{event.detail}}`,
+                            address: `{{event.address}}`,
+                            date: `{{event.date}}`,
+                            time: `{{event.time}}`,
                             price: {{ event.price }},
                             form_action_url: '{% url 'registeration:purchase' event.pk %}'
                         },
