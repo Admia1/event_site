@@ -373,8 +373,8 @@ html
     text-align:center;
 } */
 
-#address, #phone_number, #fax,
-#address2, #phone_number2, #fax2
+#address, #phone_number, #fax, #contact_us,
+#address2, #phone_number2, #fax2, #contact_us2
 {
     font-family:Yekan;
     font-size:22px;
@@ -429,11 +429,50 @@ html
     direction:rtl;
 }
 
+#mobile_span, #mobile_span2
+{
+    padding-right:30px;
+    padding-left:30px;
+    font-size:15px;
+    text-align:left;
+    direction:ltr;
+}
+
+#mobile_span .mobile.alternate.icon,
+#mobile_span2 .mobile.alternate.icon
+{
+    color:rgb(0, 0, 0);
+}
+
+#email_span, #email_span2
+{
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding-right:30px;
+    padding-left:30px;
+    font-size:15px;
+    font-weight:500;
+    text-align:left;
+    direction:ltr;
+}
+
+#email_span .paper.plane.icon,
+#email_span2 .paper.plane.icon
+{
+    color:cadetblue;
+}
+
 #i3, #i3_2
 {
     margin:0px;
     float:right;
     color:rgb(76, 74, 82);
+}
+
+#icon_mobile, #icon_mobile2
+{
+    margin:0px;
+    float:right;
+    color:rgb(50, 117, 57); 
 }
 
 #speecher
@@ -740,6 +779,18 @@ html
     background-color:white!important;
     height:150px !important;
     object-fit:contain !important;
+}
+
+#team_ejraei_content .description .circle.icon
+{
+    color:rgb(68, 141, 170) !important;
+    font-size:9px;
+    float:right !important;
+    margin-right:0px !important;
+    margin-left:3px !important;
+    position:relative;
+    top:2px;
+    left:5px;
 }
 
 

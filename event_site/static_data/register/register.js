@@ -1,10 +1,36 @@
 $(document).ready(function(){
 
 
+    $("#dp").focus(function(){
+
+        $(this).css({
+            "border-radius":"0px"
+        });
+
+        // $("#dp_menu").css({
+        //     "border-radius":"0px"
+        // });
+    });
+
+    $("#dp").blur(function(){
+
+        $(this).css({
+            "border-radius":"20px"
+        });
+
+        // $("#dp_menu").css({
+        //     "border-radius":"0px"
+        // });
+    });
     
 
 
     $('input[name="detail_type"]').change(function(){
+
+        $("#dp").css({
+            "border-radius":"20px"
+        });
+
         if($(this).val() == "0")
         {
             $("#a6").css({"display":"block"});
@@ -120,7 +146,6 @@ $(document).ready(function(){
 
 
 });
-
 $('.ui.form')
   .form
 ({
@@ -166,9 +191,9 @@ $('.ui.form')
         },
 
 
-        identify_number:
+        national_id:
         {
-            identifier: 'identify_number',
+            identifier: 'national_id',
             rules:
             [
                 {
@@ -183,9 +208,9 @@ $('.ui.form')
             ],
         },
 
-        activity:
+        detail_type:
         {
-            identifier: 'activity',
+            identifier: 'detail_type',
             rules:
             [
                 {
@@ -207,14 +232,19 @@ $('.ui.form')
             ],
         },
 
-        phone:
+        phone_number:
         {
-            identifier  : 'phone',
+            identifier  : 'phone_number',
             rules:
             [
                 {
                     type   : 'empty',
                     prompt : 'لطفا شماره تماس خود را وارد کنید'
+                },
+
+                {
+                    type   : 'integer',
+                    prompt : 'شماره تماس فقط شامل رقم می باشد'
                 }
             ],
         },
@@ -223,22 +253,224 @@ $('.ui.form')
     }
 })
 .submit(function(event){
-//   if( $('.ui.form').form('is valid')) {
-    // event.preventDefault();
-    if($('input[name="activity"]').val()=="0" && $('input[name="code"]').val()=="")
+
+    var valid_all = 1;
+    
+    if($('input[name="detail_type"]').val()=="1" && $('input[name="university"]').val()=="")
     {
         event.preventDefault();
-        // $("#validation-message").children[0].append("<li>لطفا کد راهنمای خود را وارد کنید<li>");
-        // $(".ui.list").append("<li>لطفا کد راهنمای خود را وارد کنید<li>");
         var node = document.createElement("LI");
-        var textnode = document.createTextNode("لطفا کد راهنمای خود را وارد کنید");
-        // node.style.backgroundColor("color: #9f3a38;");
-        document.getElementById("code").style.backgroundColor = "#fff6f6";
-        document.getElementById("code").style.borderColor = "#e0b4b4";
-        document.getElementById("code").style.color = "#9f3a38";
+        var textnode = document.createTextNode("لطفا نام دانشگاه را وارد کنید");
+        document.getElementById("university").style.backgroundColor = "#fff6f6";
+        document.getElementById("university").style.borderColor = "#e0b4b4";
+        document.getElementById("university").style.color = "#9f3a38";
         node.appendChild(textnode);
         document.getElementById("validation-message").childNodes[0].appendChild(node);
+        $("validation-message").css({'display':'block'})
+        valid_uni = 0;
+        valid_all = 0;
+    }
+
+    if($('input[name="detail_type"]').val()=="1" && $('input[name="study_field"]').val()=="")
+    {
+        event.preventDefault();
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode("لطفا رشته ی تحصیلی خود را وارد کنید");
+        document.getElementById("study_field").style.backgroundColor = "#fff6f6";
+        document.getElementById("study_field").style.borderColor = "#e0b4b4";
+        document.getElementById("study_field").style.color = "#9f3a38";
+        node.appendChild(textnode);
+        document.getElementById("validation-message").childNodes[0].appendChild(node);
+        valid_stufield = 0;
+        valid_all = 0;
+    }
+
+    if($('input[name="detail_type"]').val()=="1" && $('input[name="student_id"]').val()=="")
+    {
+        event.preventDefault();
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode("لطفا شماره دانشجویی خود را وارد کنید");
+        document.getElementById("student_id").style.backgroundColor = "#fff6f6";
+        document.getElementById("student_id").style.borderColor = "#e0b4b4";
+        document.getElementById("student_id").style.color = "#9f3a38";
+        node.appendChild(textnode);
+        document.getElementById("validation-message").childNodes[0].appendChild(node);
+        valid_stuid = 0;
+        valid_all = 0;
+    }
+
+    if($('input[name="detail_type"]').val()=="1" && $('input[name="student_id"]').val()!="")
+    {
+        var text = $('input[name="student_id"]').val();
+        var e = 0;
+        for(var i=0;i<text.length;i++)
+        {
+            if(text[i]!="1" && text[i]!="2" && text[i]!="3" && text[i]!="4" && text[i]!="5" && text[i]!="6" && text[i]!="7"
+            && text[i]!="8" && text[i]!="9" && text[i]!="0")
+            {
+                e = 1;
+            }
+        }
+        if(e == 1)
+        {
+            event.preventDefault();
+            var node = document.createElement("LI");
+            var textnode = document.createTextNode("شماره دانشجویی فقط شامل ارقام می باشد");
+            document.getElementById("student_id").style.backgroundColor = "#fff6f6";
+            document.getElementById("student_id").style.borderColor = "#e0b4b4";
+            document.getElementById("student_id").style.color = "#9f3a38";
+            node.appendChild(textnode);
+            document.getElementById("validation-message").childNodes[0].appendChild(node);
+            valid_stuid = 0;
+            valid_all = 0;
+        }
+    }
+
+    if($('input[name="detail_type"]').val()=="2" && $('input[name="agency"]').val()=="")
+    {
+        event.preventDefault();
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode("لطفا نام آژانس خود را وارد کنید");
+        document.getElementById("agency").style.backgroundColor = "#fff6f6";
+        document.getElementById("agency").style.borderColor = "#e0b4b4";
+        document.getElementById("agency").style.color = "#9f3a38";
+        node.appendChild(textnode);
+        document.getElementById("validation-message").childNodes[0].appendChild(node);
+        valid_agency = 0;
+        valid_all = 0;
+    }
+
+    if($('input[name="detail_type"]').val()=="2" && $('input[name="city"]').val()=="")
+    {
+        event.preventDefault();
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode("لطفا نام شهر خود را وارد کنید");
+        document.getElementById("city").style.backgroundColor = "#fff6f6";
+        document.getElementById("city").style.borderColor = "#e0b4b4";
+        document.getElementById("city").style.color = "#9f3a38";
+        node.appendChild(textnode);
+        document.getElementById("validation-message").childNodes[0].appendChild(node);
+        valid_city = 0;
+        valid_all = 0;
+    }
+
+    if($('input[name="detail_type"]').val()=="3" && $('input[name="hotel"]').val()=="")
+    {
+        event.preventDefault();
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode("لطفا نام هتل خود را وارد کنید");
+        document.getElementById("hotel").style.backgroundColor = "#fff6f6";
+        document.getElementById("hotel").style.borderColor = "#e0b4b4";
+        document.getElementById("hotel").style.color = "#9f3a38";
+        node.appendChild(textnode);
+        document.getElementById("validation-message").childNodes[0].appendChild(node);
+        valid_hotel = 0;
+        valid_all = 0;
+    }
+
+    if($('input[name="detail_type"]').val()=="3" && $('input[name="city"]').val()=="")
+    {
+        event.preventDefault();
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode("لطفا نام شهر خود را وارد کنید");
+        document.getElementById("city").style.backgroundColor = "#fff6f6";
+        document.getElementById("city").style.borderColor = "#e0b4b4";
+        document.getElementById("city").style.color = "#9f3a38";
+        node.appendChild(textnode);
+        document.getElementById("validation-message").childNodes[0].appendChild(node);
+        valid_city = 0;
+        valid_all = 0;
     }
     
-//   }
+  
+    if(valid_all == 0)
+    {
+        event.preventDefault();
+    }
+
+
+
+
+});
+
+$(document).ready(function(){
+    $("#university").click(function(){
+
+        if(valid_uni==0)
+        {
+            $(this).css({
+                "border-color":"rgba(34,36,38,.15)",
+                "background-color":"#fff",
+                "color":"rgba(0,0,0,.87)"
+            });
+            valid_uni = 1;
+        }
+        
+    });
+
+    $("#study_field").click(function(){
+        if(valid_stufield==0)
+        {
+            $(this).css({
+                "border":"1px solid rgba(34,36,38,.15)",
+                "background-color":"#fff",
+                "color":"rgba(0,0,0,.87)"
+            });
+            valid_stufield = 1;
+        }
+        
+    });
+
+    $("#student_id").click(function(){
+        if(valid_stuid==0)
+        {
+            $(this).css({
+                "border":"1px solid rgba(34,36,38,.15)",
+                "background-color":"#fff",
+                "color":"rgba(0,0,0,.87)"
+            });
+            valid_stuid = 1;
+        }
+        
+    });
+
+    $("#agency").click(function(){
+        if(valid_agency==0)
+        {
+            $(this).css({
+                "border":"1px solid rgba(34,36,38,.15)",
+                "background-color":"#fff",
+                "color":"rgba(0,0,0,.87)"
+            });
+            valid_agency = 1;
+        }
+        
+    });
+
+    $("#hotel").click(function(){
+        if(valid_hotel==0)
+        {
+            $(this).css({
+                "border":"1px solid rgba(34,36,38,.15)",
+                "background-color":"#fff",
+                "color":"rgba(0,0,0,.87)"
+            });
+            valid_hotel = 1;
+        }
+        
+    });
+
+    $("#city").click(function(){
+        if(valid_city==0)
+        {
+            $(this).css({
+                "border":"1px solid rgba(34,36,38,.15)",
+                "background-color":"#fff",
+                "color":"rgba(0,0,0,.87)"
+            });
+            valid_city = 1;
+        }
+        
+    });
+
 });

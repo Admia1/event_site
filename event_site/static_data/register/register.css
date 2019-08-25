@@ -32,7 +32,7 @@
     margin:0 auto 0px;
     border-bottom-left-radius:20px;
     border-bottom-right-radius:20px;
-    background-color:cadetblue;
+    background:linear-gradient(to top right,rgb(79, 149, 158),rgb(98, 145, 160));
 }
 
 #image_and_form
@@ -203,11 +203,11 @@ span
     float:left;
 }
 
-#dp_menu
+/* #dp_menu
 {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-}
+} */
 
 #item1, #item2, #item3,
 #item4, #item5
@@ -383,6 +383,36 @@ span
     margin-left: 10px;
 }
 
+#span6 .hashtag.icon
+{
+    color:rgb(59, 100, 110);
+}
+
+#span8 .university.icon
+{
+    color:rgb(187, 101, 44);
+}
+
+#span9 .book.icon
+{
+    color:cadetblue;
+}
+
+#span10 .graduation.cap.icon
+{
+    color:rgb(48, 48, 70);
+}
+
+#span11 .plane.icon
+{
+    color:cadetblue;
+}
+
+#span13 .home.icon
+{
+    color:rgb(36, 122, 54);
+} 
+
 @media screen and (max-width:850px)
 {
     #fixed_menu
@@ -403,7 +433,7 @@ span
 
     #main_form
     {
-        width:90%;
+        width:100%;
         /* border-radius:0px; */
     }
 
@@ -420,15 +450,20 @@ span
         width:100%;
     }
 
-    #dp_menu
+    /* #dp_menu
     {
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
-    }
+    } */
 
     #sign_fm, #exit_fm
     {
         display:none;
+    }
+
+    #image_and_form
+    {
+        width:90%;
     }
 
 }
