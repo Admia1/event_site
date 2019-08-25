@@ -250,7 +250,7 @@ def purchase_view(request, event_pk):
         return render(request, template, {'error_message':'شما قبلا بلیط این رویداد را خریداری کرده اید'})
     
     #cheat the cheaters
-    for invoice in Invoice.objects.filter(active=1, paid=0, event=event, discount_pk=discount_pk, person=person):
+    for invoice in Invoice.objects.filter(active=1, paid=0, amount=event.price, event=event, discount_pk=discount_pk, person=person):
         if datetime.datetime.now(datetime.timezone.utc)- invoice.created_date > datetime.timedelta(minutes=15):
             #come back so soon ? use old link
             return redirect('https://www.zarinpal.com/pg/StartPay/' + str(invoice.authority))
