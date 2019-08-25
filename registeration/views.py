@@ -151,7 +151,7 @@ def register_view(request):
                     return HttpResponseRedirect(reverse('registeration:event_group', kwargs={'event_group_pk':1}))
 
                 else:
-                    return render(request,template,{'error_message': "شما قبلا این بلیط را خریده اید"})
+                    return render(request,template,{'error_message': "کد ملی از قبل وجود دارد"})
             else:
                 return render(request,template,{'error_message': error_message})
         else:
