@@ -143,6 +143,7 @@ html
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: scroll;
 }
 
 #main_header1
@@ -156,6 +157,9 @@ html
     position: absolute;
     width:auto;
     padding: 0px 10px;
+    width:90%;
+    
+    /* text-shadow: 50px 0px px #fff; */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -860,8 +864,29 @@ html
     }
 }
 
+@media screen and (max-height:450px)
+{
+    #main_header1
+    {
+        line-height:28px;
+        font-size:22px;
+    }
+}
+
 @media screen and (max-width:450px)
 {
+
+    #speecher_img
+    {
+        height:200px;
+        width:200px;
+    }
+
+    #main_header1
+    {
+        line-height:28px;
+        font-size:22px;
+    }
 
     #fixed_menu
     {
@@ -914,7 +939,7 @@ html
         width:100%;
     }
 
-    #speecher_img, #location_content,
+    #location_content,
     #location_content2
     {
         width:100%;
@@ -927,4 +952,5 @@ html
     {
         width:101%;
     } 
+
 }
