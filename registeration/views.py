@@ -350,6 +350,8 @@ def invoice_cleaner():
 def event_group_view(request, event_group_pk):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("registeration:login"))
+    person = Person.objects.get(user=request.user)
+
     template = 'registeration/event_group.html'
     try:
         event_group = EventGroup.objects.get(pk=event_group_pk)
@@ -358,12 +360,13 @@ def event_group_view(request, event_group_pk):
     events = Event.objects.filter(event_group=event_group)
 
     for event in events:
-        invoice_qs = Invoice.objects.filter(event=event, person=Person.objects.get(user=request.user), paid=1)
+        invoice_qs = Invoice.objects.filter(event=event, person=person, paid=1)
         if invoice_qs.exists():
             invoice = invoice_qs.first()
 
             ticket_data = {
-                'event': event
+                'event': event,
+                'person': person
             }
 
             # hardcoded
