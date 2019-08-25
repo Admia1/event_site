@@ -10,6 +10,7 @@ import json
 
 from django.contrib.auth.models import User
 
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from .models import Person, Invoice, Event, Discount, EventGroup
 
 from . import secret
@@ -347,6 +348,31 @@ def event_group_view(request, event_group_pk):
     except:
         return error(request)
     events = Event.objects.filter(event_group=event_group)
+
+    for event in events:
+        if Invoice.objects.filter(event=event, person=Person.objects.get(user=request.user), paid=1).exists():
+            
+            ticket_data = {
+                'event': event
+            }
+
+            # hardcoded
+            if event.name == 'شیراز':
+                logos = [
+                    static('home/hami1.jpg'),
+                    static('home/hami4.jpg'),
+                    static('home/shiraz_uni.jpg'),
+                ]
+            else:
+                logos = []
+
+            ticket_data['logos'] = logos
+
+            return render(request, 'registeration/event_group_paid.html', {
+                'ticket_data': ticket_data,
+                'payment_success' : request.GET.get('payment_success', '')
+            })
+
     return render(request, template, {
         'events' : events,
         'discount_check_url': furl(request.build_absolute_uri(reverse("registeration:discount_check", kwargs={'event_group_pk': event_group_pk}))),
