@@ -42,7 +42,7 @@
             </div>
 
             <div id="content">
-                <div id="three_steps">
+                <div id="three_steps" style="margin-bottom: 20px;">
 
 
                     <div class="ui three top attached mini steps">
@@ -98,28 +98,63 @@
                 </div>
                 {% endif %}
                 
-                <div id="topdf">
-                    <table>
-                        <td style="width: 1000px;">
-                            {% for logo in ticket_data.logos %}
-                                <img style="width: 300px;" src="{{ logo }}">
-                            {% endfor %}
-                        </td>
-                        <td>
-                            خهتصشبثهختبصثشهخ
-                        </td>
-                    </table>
-                </div>
+                <div id="topdf" style="text-align: center; display: flex; width: 65%; min-width: 400px; margin: 30px auto 0px auto; border: 1px solid black">
+                        <div style="width: 100%; text-align: center">
+                            <img style="width: 300px; margin: auto;" src="{% static 'event_group/photo1.jpg' %}">
+                            <div style="font-weight: 700; color: rgb(223, 5, 5); width: 100%; margin-top: 4px; font-size: 22px;">
+                                رویداد آموزشی گردشگری ورودی چین
+                            </div>
 
-                <button id="getpdf" class="ui primary button">
-                    دانلود بلیط
-                </button>
+                            <div dir="rtl" style="direction: rtl; line-height: 25px; text-align: right; margin: 10px 30px 10px 50px;">
+                                <span style="font-weight: 700;">کد بلیط</span> 9849448998
+                                <br />
+                                <span style="font-weight: 700;">نام و نام خانوادگی</span> علی مهدی یار
+                                <br />
+                                <span style="font-weight: 700;">کد ملی</span> 2282579488
+                                <br />
+                                <span style="font-weight: 700;">تاریخ رویداد</span>
+                                <br />
+                                13/4/37
+                                <br />
+                                <span style="font-weight: 700;">زمان بندی برگزاری رویداد</span>
+                                <br />
+                                ساعت 14 الی 18
+                                <br />
+                                <span style="font-weight: 700;">آدرس</span>
+                                <br />
+                                شیراز
+                                <br />
+                                <span style="font-weight: 700;">توضیحات</span>
+                                <br />
+                                _ لطفا در ساعت مقرر در محل رویداد حضور داشته باشید<br />
+_امکان استفاده از پارکینگ پردیس بین الملل دانشگاه شیراز برای شما عزیزان فراهم شده است<br />
+_ گواهی حضور در دوره به مدت دو هفته پس از پایان این رویداد از محل دفتر مرکز آموزش های آزاد و تخصصی واقع در پردیس بین الملل دانشگاه شیراز قایل دریافت می باشد
+                            </div>
+                            
+                            <div style="display: flex; flex-wrap: wrap; width: 60%; margin: auto;">
+                                {% for logo in ticket_data.logos %}
+                                    <img style="margin: 10px auto; width: 80px;" src="{{ logo }}">
+                                {% endfor %}
+                            </div>
+                        </div>
+                    
+                </div>
+                <div style="width: 100%; text-align: center;">
+
+                        <button id="getpdf" class="ui primary button" style="width: 300px; margin: 10px auto;">
+                            دانلود بلیط
+                        </button>
+                </div>
             </div>
         </div>
         <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
         <script>
-            var source = window.document.getElementById("topdf");
-            html2pdf(source);
+            $(document).ready(function(){
+                $('#getpdf').click(function(){
+                    var source = window.document.getElementById("topdf");
+                    html2pdf(source);
+                })
+            })
         </script>
 
     </body>

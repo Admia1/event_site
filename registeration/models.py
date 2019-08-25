@@ -61,6 +61,9 @@ class Event(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(default=5000)#tooman.
     capacity = models.IntegerField(default=30)#People
+    address = models.TextField(max_length=1000, blank=True, null=True)
+    date = models.TextField(max_length=1000, blank=True, null=True)
+    time = models.TextField(max_length=1000, blank=True, null=True)
     detail = models.TextField(max_length=1000)
 
     file_name = models.CharField(max_length=50)
