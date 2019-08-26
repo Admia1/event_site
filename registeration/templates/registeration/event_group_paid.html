@@ -133,9 +133,9 @@
                                 {% endautoescape %}
                             </div>
                             
-                            <div style="display: flex; flex-wrap: wrap; width: 70%; margin: auto;">
+                            <div style="display: flex; flex-wrap: wrap; width: 65%; margin: auto;">
                                 {% for logo in ticket_data.logos %}
-                                    <img style="margin: 10px auto; width: 80px;" src="{{ logo }}">
+                                    <img style="margin: 10px auto; width: 80px; object-fit: contain;" src="{{ logo }}">
                                 {% endfor %}
                             </div>
                         </div>
