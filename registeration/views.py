@@ -376,6 +376,14 @@ def event_group_view(request, event_group_pk):
                     static('home/hami4.jpg'),
                     static('home/shiraz_uni.jpg'),
                 ]
+            elif event.name == 'تهران':
+                logos = [
+                    static('home/hami2.jpg'),
+                    static('home/shiraz_uni.jpg'),
+                    static('home/hami3.jpg'),
+                    static('home/hami5.jpg'),
+                    static('home/hami6.jpg'),                    
+                ]
             else:
                 logos = []
 
