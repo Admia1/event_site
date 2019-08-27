@@ -298,9 +298,13 @@ body
 
 @media screen and (max-width:800px)
 {
-    #sign_fm, #exit_fm
+    #sign_fm
     {
         display:none;
+    }
+    #fixed_menu
+    {
+        padding-right: 10px;
     }
 
 }
