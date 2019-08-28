@@ -67,7 +67,7 @@ class Event(models.Model):
     detail = models.TextField(max_length=1000)
 
     file_name = models.CharField(max_length=50)
-
+    is_active = models.BooleanField(default=True)
     event_group = models.ForeignKey(EventGroup, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -108,6 +108,7 @@ class Discount(models.Model):
 
     detail = models.CharField(max_length=100)
 
+    is_active = models.BooleanField(default=True)
     def __str__(self):
         return str(self.percent) + "% " + self.detail
 

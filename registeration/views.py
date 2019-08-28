@@ -357,7 +357,7 @@ def event_group_view(request, event_group_pk):
         event_group = EventGroup.objects.get(pk=event_group_pk)
     except:
         return error(request)
-    events = Event.objects.filter(event_group=event_group)
+    events = Event.objects.filter(event_group=event_group, is_active=True)
 
     for event in events:
         invoice_qs = Invoice.objects.filter(event=event, person=person, paid=1)
