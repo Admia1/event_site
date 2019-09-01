@@ -1,5 +1,5 @@
 from django.contrib.auth import  login, logout
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
@@ -431,3 +431,28 @@ def discount_check_api(request, event_group_pk):
         return JsonResponse({"status" : "ok", "result" : "error", "error_message" : "دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است"})
 
     return JsonResponse({"status" : "ok", "result" : "ok", "percent" : discount.percent})
+
+def all_tickets(request, event_group_pk):
+    if not request.user.is_authenticated or not request.user.is_staff:
+        raise Http404
+
+    try:
+        event_group = EventGroup.objects.get(pk=event_group_pk)
+    except:
+        raise Http404
+
+    events = Event.objects.filter(event_group=event_group)
+    ticket_groups = []
+    for event in events:
+        invoice_qs = Invoice.objects.filter(event=event, paid=1)
+        tickets_container = {
+            'name': event.name,
+            'tickets': [],
+            'count': invoice_qs.count(),
+        }
+        if invoice_qs.exists():
+            for invoice in invoice_qs:
+                tickets_container['tickets'].append(invoice)
+        ticket_groups.append(tickets_container)
+            
+    return render(request, 'registeration/all_tickets.html', {'ticket_groups': ticket_groups})
