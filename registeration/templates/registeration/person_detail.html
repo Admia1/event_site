@@ -170,7 +170,7 @@
               بلیط های خریداری شده توسط این کاربر
             </div>
               <table class="ui single line striped selectable unstackable table center aligned">
-                {% for invoice in person.invoice_set %}
+                {% for invoice in person.invoice_set.all %}
                   {% if invoice.paid %}
                     <tr>
                       invoice.event.name
