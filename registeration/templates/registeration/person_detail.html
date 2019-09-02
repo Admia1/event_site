@@ -19,18 +19,18 @@
                   <th>
                     نام
                   </th>
-                  <th>
+                  <td>
                     {{ person.first_name }}
-                  </th>
+                  </td>
                   <!-- name -->
                 </tr>
                 <tr>
                   <th>
                     نام خانوادگی
                   </th>
-                  <th>
+                  <td>
                     {{ person.last_name }}
-                  </th>
+                  </td>
                 </tr>
 
                 <tr>
@@ -38,9 +38,9 @@
                   <th>
                     کد ملی
                   </th>
-                  <th>
+                  <td>
                     {{person.national_id}}
-                  </th>
+                  </td>
                 </tr>
 
                 <tr>
@@ -48,9 +48,9 @@
                   <th>
                     شماره تماس
                   </th>
-                  <th>
+                  <td>
                     {{person.phone_number}}
-                  </th>
+                  </td>
                 </tr>
 
                 <tr>
@@ -58,9 +58,9 @@
                   <th>
                     پست الکترونیک
                   </th>
-                  <th>
+                  <td>
                     {{ person.email }}
-                  </th>
+                  </td>
                 </tr>
 
                 <tr>
@@ -68,9 +68,9 @@
                   <th>
                     حوزه فعالیت
                   </th>
-                  <th>
+                  <td>
                     {{ person.person_type_show }}
-                  </th>
+                  </td>
                 </tr>
 
                 {% if person.guide_id %}
@@ -79,9 +79,9 @@
                   <th>
                     کد راهنما
                   </th>
-                  <th>
+                  <td>
                     {{ person.guide_id }}
-                  </th>
+                  </td>
                 </tr>
                 {% endif %}
 
@@ -91,9 +91,9 @@
                   <th>
                     دانشگاه
                   </th>
-                  <th>
+                  <td>
                     {{ person.university }}
-                  </th>
+                  </td>
                 </tr>
                 {% endif %}
 
@@ -103,9 +103,9 @@
                   <th>
                      رشته تحصیلی
                   </th>
-                  <th>
+                  <td>
                     {{ person.study_field }}
-                  </th>
+                  </td>
                 </tr>
                 {% endif %}
 
@@ -115,9 +115,9 @@
                   <th>
                     شماره دانشجویی
                   </th>
-                  <th>
+                  <td>
                     {{ person.student_id }}
-                  </th>
+                  </td>
                 </tr>
                 {% endif %}
 
@@ -127,9 +127,9 @@
                   <th>
                     آژانس
                   </th>
-                  <th>
+                  <td>
                     {{ person.agency }}
-                  </th>
+                  </td>
                 </tr>
                 {% endif %}
 
@@ -139,9 +139,9 @@
                   <th>
                     شهر
                   </th>
-                  <th>
+                  <td>
                     {{ person.city }}
-                  </th>
+                  </td>
                 </tr>
                 {% endif %}
 
@@ -151,9 +151,9 @@
                   <th>
                     هتل
                   </th>
-                  <th>
+                  <td>
                     {{ person.hotel }}
-                  </th>
+                  </td>
                 </tr>
                 {% endif %}
 
