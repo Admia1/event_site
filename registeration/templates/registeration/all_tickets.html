@@ -38,7 +38,7 @@
                 {% for ticket in ticket_group.tickets %}
                 <tr>
                     <td>
-                      {{ created_date }}
+                      {{ ticket.created_date }}
                     </td>
                     <td>
                         <a href="{% url 'registeration:person_detail' ticket.person.pk %}">{{ ticket.person.first_name }} {{ ticket.person.last_name }}</a>
