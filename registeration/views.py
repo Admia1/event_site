@@ -466,4 +466,4 @@ def person_detail_view(request, person_pk):
     except:
         raise Http404
 
-    return render(request, 'registeration/person_detail', {'person' : person})
+    return render(request, 'registeration/person_detail.html', {'person' : person})
