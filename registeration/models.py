@@ -99,6 +99,13 @@ class Invoice(models.Model):
         return "در حال پرداخت"
 
 
+    def show_discount_detail(self):
+        if self.discount_pk:
+            discount = Discount.get(pk=self.discount_pk)
+            return discount.detail
+        else:
+            return "بدون استفاده از تخفیف"
+
 class Discount(models.Model):
     percent = models.IntegerField(default=0)
     #event   = models.ForeignKey(Event, on_delete=models.CASCADE)

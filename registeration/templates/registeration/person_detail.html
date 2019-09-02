@@ -170,10 +170,29 @@
               بلیط های خریداری شده توسط این کاربر
             </div>
               <table class="ui single line striped selectable unstackable table center aligned">
+                <tr>
+                  <th>
+                    نام رویداد
+                  </th>
+                  <th>
+                    مبلغ پرداختی
+                  </th>
+                  <th>
+                    اطلاعات تخفیف
+                  </th>
+                </tr>
                 {% for invoice in person.invoice_set.all %}
                   {% if invoice.paid %}
                     <tr>
-                      invoice.event.name
+                      <td>
+                        {{ invoice.event.name }}
+                      </td>
+                      <td>
+                        {{ discount.price }}
+                      </td>
+                      <td>
+                        {{ invoice.show_discount_detail }}
+                      </td>
                     </tr>
                   {% endif %}
                 {% endfor %}
