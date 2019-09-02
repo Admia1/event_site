@@ -101,7 +101,7 @@ class Invoice(models.Model):
 
     def show_discount_detail(self):
         if self.discount_pk:
-            discount = Discount.get(pk=self.discount_pk)
+            discount = Discount.objects.get(pk=self.discount_pk)
             return discount.detail
         else:
             return "بدون استفاده از تخفیف"
