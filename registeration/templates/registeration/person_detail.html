@@ -160,5 +160,25 @@
             </table>
         </div>
     </div>
+
+
+
+    <div class="ui container" style="margin: 20px auto;">
+        <div class="ui segment">
+
+            <div class="ui header" style="text-align: center;">
+              بلیط های خریداری شده توسط این کاربر
+            </div>
+              <table class="ui single line striped selectable unstackable table center aligned">
+                {% for invoice in person.invoice_set %}
+                  {% if invoice.paid %}
+                    <tr>
+                      invoice.event.name
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </table>
+        </div>
+    </div>
 </body>
 </html>
