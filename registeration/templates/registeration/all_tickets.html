@@ -17,6 +17,9 @@
             <table class="ui single line striped selectable unstackable table center aligned">
                 <tr>
                     <th>
+                      تاریح خرید
+                    </th>
+                    <th>
                         نام و نام خانوادگی
                     </th>
                     <th>
@@ -34,6 +37,9 @@
                 </tr>
                 {% for ticket in ticket_group.tickets %}
                 <tr>
+                    <td>
+                      {{ created_date }}
+                    </td>
                     <td>
                         <a href="{% url 'registeration:person_detail' ticket.person.pk %}">{{ ticket.person.first_name }} {{ ticket.person.last_name }}</a>
                     </td>
