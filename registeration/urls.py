@@ -6,6 +6,7 @@ from . import views
 app_name = 'registeration'
 
 urlpatterns = [
+    path('person/<int:person_pk>/', views.person_detail_view, name="person_detail"),
     path('all-tickets/<int:event_group_pk>/', views.all_tickets),
     path('register/', views.register_view, name="register"),
     path('login/', views.login_view, name="login"),

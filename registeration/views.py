@@ -219,7 +219,7 @@ def verify_view(request):
                 o_invoice.active=0
                 o_invoice.save()
             return HttpResponseRedirect("%s?payment_success=true" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
-            
+
         else:
             #failed to pay
             return HttpResponseRedirect("%s?payment_error=پرداخت ناموفق" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
@@ -241,12 +241,12 @@ def purchase_view(request, event_pk):
         event  = Event.objects.get(pk = event_pk)
     except:
         return render(request, template, {'error_message': 'همچین رویدادی وجود ندارد'})
-    
+
     if request.method != 'POST':
         return error(request)
     if 'discount_code' not in request.POST:
         return error(request)
-    
+
     if request.POST['discount_code']:
         try:
             discount = Discount.objects.get(event_group=event.event_group, code=request.POST['discount_code'])#debug event
@@ -257,8 +257,8 @@ def purchase_view(request, event_pk):
     else:
         discount_pk = 0
     if Invoice.objects.filter(event=event, person=person, paid=1).exists():
-        return HttpResponseRedirect("%s?payment_error=شما قبلا بلیط این رویداد را خریداری کرده اید" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
-    
+        return HttpResponseRedirect("%s?payment_error=شما قبلا بلیط این رویداد را خریداری کرده اید" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
+
     #cheat the cheaters
     for invoice in Invoice.objects.filter(active=1, paid=0, amount=event.price, event=event, discount_pk=discount_pk, person=person):
         if datetime.datetime.now(datetime.timezone.utc)- invoice.created_date > datetime.timedelta(minutes=15):
@@ -275,7 +275,7 @@ def purchase_view(request, event_pk):
     if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
         invoice_cleaner()# :/
         if Invoice.objects.filter(event=event, active=1).count() >= event.capacity:
-            return HttpResponseRedirect("%s?payment_error=ظرفیت این رویداد به اتمام رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
+            return HttpResponseRedirect("%s?payment_error=ظرفیت این رویداد به اتمام رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
 
 
     amount  = event.price
@@ -284,8 +284,8 @@ def purchase_view(request, event_pk):
     if Invoice.objects.filter(event=event, active=1).count() > event.capacity:
         invoice.active=0
         invoice.save()
-        return HttpResponseRedirect("%s?payment_error=ظرفیت این رویداد به اتمام رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
-        
+        return HttpResponseRedirect("%s?payment_error=ظرفیت این رویداد به اتمام رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
+
     #cant turn off other invoices of this person :(
     #change amount for off here
 
@@ -293,7 +293,7 @@ def purchase_view(request, event_pk):
         if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() >= discount.capacity:
             invoice.active=0
             invoice.save()
-            return HttpResponseRedirect("%s?payment_error=دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
+            return HttpResponseRedirect("%s?payment_error=دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
 
         invoice.discount_pk = discount.pk
 
@@ -304,7 +304,7 @@ def purchase_view(request, event_pk):
         if Invoice.objects.filter(discount_pk=discount.pk, event=event, active=1).count() > discount.capacity:
             invoice.active=0
             invoice.save()
-            return HttpResponseRedirect("%s?payment_error=دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))        
+            return HttpResponseRedirect("%s?payment_error=دفعات مجاز استفاده از این کد تخفیف به پایان رسیده است" % reverse('registeration:event_group', kwargs={'event_group_pk':1}))
 
     return send_to_zarin(request, invoice)
 
@@ -319,7 +319,7 @@ def send_to_zarin(request, invoice):
     email  = invoice.person.email                         # Optional
     mobile = invoice.person.phone_number                  # Optional
     CallbackURL = furl(request.build_absolute_uri(reverse("registeration:verify")))
-    
+
     amount = invoice.amount
 
     result = client.service.PaymentRequest(MERCHANT, amount, description, email, mobile, CallbackURL)
@@ -382,7 +382,7 @@ def event_group_view(request, event_group_pk):
                     static('home/shiraz_uni.jpg'),
                     static('home/hami3.jpg'),
                     static('home/hami5.jpg'),
-                    static('home/hami6.jpg'),                    
+                    static('home/hami6.jpg'),
                 ]
             else:
                 logos = []
@@ -390,7 +390,7 @@ def event_group_view(request, event_group_pk):
             ticket_data['logos'] = logos
             ticket_data['logos_count'] = len(logos)
             ticket_data['refid'] = invoice.refid
-            
+
             return render(request, 'registeration/event_group_paid.html', {
                 'ticket_data': ticket_data,
                 'payment_success' : request.GET.get('payment_success', '')
@@ -454,5 +454,16 @@ def all_tickets(request, event_group_pk):
             for invoice in invoice_qs:
                 tickets_container['tickets'].append(invoice)
         ticket_groups.append(tickets_container)
-            
+
     return render(request, 'registeration/all_tickets.html', {'ticket_groups': ticket_groups})
+
+def person_detail_view(request, person_pk):
+    if not request.user.is_authenticated or not request.user.is_staff:
+        raise Http404
+
+    try:
+        person = Person.objects.get(pk=person_pk)
+    except:
+        raise Http404
+
+    return render(request, 'registeration/person_detail', {'person' : person})

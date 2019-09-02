@@ -20,13 +20,31 @@
                         نام و نام خانوادگی
                     </th>
                     <th>
+                      شماره تماس
+                    </th>
+                    <th>
+                      پست الکترونیک
+                    </th>
+                    <th>
+                      شماره بلیط
+                    </th>
+                    <th>
                         مبلغ پرداخت شده
                     </th>
                 </tr>
                 {% for ticket in ticket_group.tickets %}
                 <tr>
                     <td>
-                        {{ ticket.person.first_name }} {{ ticket.person.last_name }}
+                        <a href="{% url 'registeration:person_detail' ticket.person.pk %}">{{ ticket.person.first_name }} {{ ticket.person.last_name }}</a>
+                    </td>
+                    <td>
+                      {{ ticket.person.phone_number }}
+                    </td>
+                    <td>
+                      {{ ticket.person.email }}
+                    </td>
+                    <td>
+                      {{ ticket.refid }}
                     </td>
                     <td>
                         {{ ticket }}

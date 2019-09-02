@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>رویداد های آکادمیک</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body style="background-color: #eeeeee" dir="rtl">
+    <div class="ui container" style="margin: 20px auto;">
+        <div class="ui segment">
+
+            <div class="ui header" style="text-align: center;">
+                کاربر شماره -{{ person.pk }}-
+            </div>
+            <table class="ui single line striped selectable unstackable table center aligned">
+                <tr>
+                  <th>
+                    نام
+                  </th>
+                  <th>
+                    {{ person.first_name }}
+                  </th>
+                  <!-- name -->
+                </tr>
+                <tr>
+                  <th>
+                    نام خانوادگی
+                  </th>
+                  <th>
+                    {{ person.last_name }}
+                  </th>
+                </tr>
+
+                <tr>
+                  <!-- national_id -->
+                  <th>
+                    کد ملی
+                  </th>
+                  <th>
+                    {{person.national_id}}
+                  </th>
+                </tr>
+
+                <tr>
+                  <!-- phone_number -->
+                  <th>
+                    شماره تماس
+                  </th>
+                  <th>
+                    {{person.phone_number}}
+                  </th>
+                </tr>
+
+                <tr>
+                  <!-- email -->
+                  <th>
+                    پست الکترونیک
+                  </th>
+                  <th>
+                    {{ person.email }}
+                  </th>
+                </tr>
+
+                <tr>
+                  <!-- detail_type -->
+                  <th>
+                    حوزه فعالیت
+                  </th>
+                  <th>
+                    {{ person.person_type_show }}
+                  </th>
+                </tr>
+
+                {% if person.guide_id %}
+                <tr>
+                  <!-- guide_id -->
+                  <th>
+                    کد راهنما
+                  </th>
+                  <th>
+                    {{ person.guide_id }}
+                  </th>
+                </tr>
+                {% endif %}
+
+                {% if person.university %}
+                <tr>
+                  <!-- university -->
+                  <th>
+                    دانشگاه
+                  </th>
+                  <th>
+                    {{ person.university }}
+                  </th>
+                </tr>
+                {% endif %}
+
+                {% if person.study_field %}
+                <tr>
+                  <!-- study_field -->
+                  <th>
+                     رشته تحصیلی
+                  </th>
+                  <th>
+                    {{ person.study_field }}
+                  </th>
+                </tr>
+                {% endif %}
+
+                {% if person.student_id %}
+                <tr>
+                  <!-- student_id -->
+                  <th>
+                    شماره دانشجویی
+                  </th>
+                  <th>
+                    {{ person.student_id }}
+                  </th>
+                </tr>
+                {% endif %}
+
+                {% if person.agency %}
+                <tr>
+                  <!-- agancy -->
+                  <th>
+                    آژانس
+                  </th>
+                  <th>
+                    {{ person.agency }}
+                  </th>
+                </tr>
+                {% endif %}
+
+                {% if person.city %}
+                <tr>
+                  <!-- city -->
+                  <th>
+                    شهر
+                  </th>
+                  <th>
+                    {{ person.city }}
+                  </th>
+                </tr>
+                {% endif %}
+
+                {% if person.hotel %}
+                <tr>
+                  <!-- hotel -->
+                  <th>
+                    هتل
+                  </th>
+                  <th>
+                    {{ person.hotel }}
+                  </th>
+                </tr>
+                {% endif %}
+
+            </table>
+        </div>
+    </div>
+</body>
+</html>
